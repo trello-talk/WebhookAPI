@@ -3,7 +3,7 @@ import { Webhook } from '../db/postgres';
 import * as locale from './locale';
 import lodash from 'lodash';
 import Bottleneck from 'bottleneck';
-import { TrelloPayload } from './types';
+import { TrelloBoard, TrelloCard, TrelloCardSource, TrelloLabel, TrelloList, TrelloPayload } from './types';
 import { cardListMapCache } from '../cache';
 import { cutoffText, escapeMarkdown } from '.';
 import { logger } from '../logger';
@@ -27,9 +27,7 @@ export default class WebhookData {
   }
 
   /**
-   * The webhook URL the data is parsing to
-   * @deprecated
-   * @type {string}
+   * The webhook URL the data is posting to
    */
   get webhookURL() {
     return `https://discord.com/api/webhooks/${this.webhook.webhookID}/${this.webhook.webhookToken}`;
@@ -54,7 +52,6 @@ export default class WebhookData {
 
   /**
    * The model that this action is for
-   * @type {Object}
    */
   get model() {
     return this.body.model;
@@ -62,7 +59,6 @@ export default class WebhookData {
 
   /**
    * The action data
-   * @type {Object}
    */
   get action() {
     return this.body.action;
@@ -70,7 +66,6 @@ export default class WebhookData {
 
   /**
    * The user who started the event
-   * @type {Object}
    */
   get invoker() {
     const member = this.action.memberCreator;
@@ -85,7 +80,6 @@ export default class WebhookData {
   // #region action data shorthands
   /**
    * The old data from the action
-   * @type {Object}
    */
   get oldData() {
     return this.action.data.old;
@@ -93,15 +87,13 @@ export default class WebhookData {
 
   /**
    * The board represented from the action
-   * @type {?Object}
    */
-  get board() {
+  get board(): TrelloBoard {
     return this.action.data.board;
   }
 
   /**
    * The target board represented from the action
-   * @type {?Object}
    */
   get targetBoard() {
     return this.action.data.boardTarget;
@@ -109,7 +101,6 @@ export default class WebhookData {
 
   /**
    * The source board represented from the action
-   * @type {?Object}
    */
   get sourceBoard() {
     return this.action.data.boardSource;
@@ -117,15 +108,13 @@ export default class WebhookData {
 
   /**
    * The label represented from the action
-   * @type {?Object}
    */
-  get label() {
+  get label(): TrelloLabel {
     return this.action.data.label;
   }
 
   /**
    * The attachment represented from the action
-   * @type {?Object}
    */
   get attachment() {
     return this.action.data.attachment;
@@ -133,7 +122,6 @@ export default class WebhookData {
 
   /**
    * The member represented from the action
-   * @type {?Object}
    */
   get member() {
     const member = this.action.member;
@@ -148,31 +136,27 @@ export default class WebhookData {
 
   /**
    * The card represented from the action
-   * @type {?Object}
    */
-  get card() {
+  get card(): TrelloCard {
     return this.action.data.card;
   }
 
   /**
    * The source card represented from the action
-   * @type {?Object}
    */
-  get sourceCard() {
+  get sourceCard(): TrelloCardSource {
     return this.action.data.cardSource;
   }
 
   /**
    * The list represented from the action
-   * @type {?Object}
    */
-  get list() {
+  get list(): TrelloList {
     return this.action.data.list;
   }
 
   /**
    * The list before represented from the action
-   * @type {?Object}
    */
   get listBefore() {
     return this.action.data.listBefore;
@@ -180,7 +164,6 @@ export default class WebhookData {
 
   /**
    * The list after represented from the action
-   * @type {?Object}
    */
   get listAfter() {
     return this.action.data.listAfter;
@@ -188,7 +171,6 @@ export default class WebhookData {
 
   /**
    * The checklist represented from the action
-   * @type {?Object}
    */
   get checklist() {
     return this.action.data.checklist;
@@ -196,7 +178,6 @@ export default class WebhookData {
 
   /**
    * The source checklist represented from the action
-   * @type {?Object}
    */
   get sourceChecklist() {
     return this.action.data.checklistSource;
@@ -204,7 +185,6 @@ export default class WebhookData {
 
   /**
    * The checklist item represented from the action
-   * @type {?Object}
    */
   get checklistItem() {
     return this.action.data.checkItem;
@@ -212,7 +192,6 @@ export default class WebhookData {
 
   /**
    * The custom field represented from the action
-   * @type {?Object}
    */
   get customField() {
     return this.action.data.customField;
@@ -220,7 +199,6 @@ export default class WebhookData {
 
   /**
    * The custom field item represented from the action
-   * @type {?Object}
    */
   get customFieldItem() {
     return this.action.data.customFieldItem;

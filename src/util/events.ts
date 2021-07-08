@@ -20,7 +20,7 @@ export function loadEvent(filePath: string) {
   if (file.event) events.set(file.name, file.onEvent);
 }
 
-export function findFilter(payload: TrelloPayload<any>) {
+export function findFilter(payload: TrelloPayload<any>): [string, boolean] {
   const keyMap = {
     idList: 'list',
     dueComplete: 'due'
@@ -28,12 +28,12 @@ export function findFilter(payload: TrelloPayload<any>) {
   const snakeCaseAction = payload.action.type
     .replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`)
     .toUpperCase();
-  if (WebhookFilters.FLAGS[snakeCaseAction] && events.has(snakeCaseAction)) return snakeCaseAction;
+  if (WebhookFilters.FLAGS[snakeCaseAction]) return [snakeCaseAction, events.has(snakeCaseAction)];
 
   if (exports.PARENT_FILTERS.includes(snakeCaseAction) && payload.action.data.old) {
     const keyChanged = Object.keys(payload.action.data.old)[0];
     const childAction = snakeCaseAction + '_' + (keyMap[keyChanged] || keyChanged).toUpperCase();
-    if (WebhookFilters.FLAGS[childAction] && events.has(childAction)) return childAction;
+    if (WebhookFilters.FLAGS[childAction]) return [childAction, events.has(childAction)];
   }
 }
 

@@ -89,10 +89,10 @@ export const route: RouteOptions = {
     }
 
     const body = request.body as TrelloPayload<TrelloDefaultAction>;
-    const filter = findFilter(body);
+    const [filter, filterFound] = findFilter(body);
 
-    if (!filter) {
-      logger.log(`Unknown filter: ${body.action.type}`, body.action.data);
+    if (!filterFound) {
+      logger.log(`Unknown filter: ${body.action.type} / ${filter}`, body.action.data);
       return reply.status(200).send('Recieved');
     }
 

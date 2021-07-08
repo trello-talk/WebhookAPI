@@ -72,7 +72,7 @@ export interface TrelloDefaultAction {
     board: TrelloBoard;
     boardTarget?: TrelloBoard;
     boardSource?: TrelloBoard;
-    label?: any;
+    label?: TrelloLabel;
     list?: TrelloList;
     listBefore?: TrelloList;
     listAfter?: TrelloList;
@@ -127,6 +127,12 @@ export interface TrelloList {
   closed?: boolean;
 }
 
+export interface TrelloLabel {
+  id: string;
+  name: string;
+  color: TrelloColor;
+}
+
 export interface TrelloCard {
   id: string;
   name: string;
@@ -145,4 +151,4 @@ export interface TrelloCard {
   };
 }
 
-export interface TrelloCardSource extends Pick<TrelloCard, 'id' | 'name' | 'idShort'> {}
+export interface TrelloCardSource extends Pick<TrelloCard, 'id' | 'name' | 'idShort' | 'shortLink'> {}
