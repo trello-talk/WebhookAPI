@@ -1,6 +1,8 @@
 import fs from 'fs/promises';
 import path from 'path';
 
+export const IMAGE_ATTACHMENT_HOST = 'https://trello-attachments.s3.amazonaws.com/';
+
 export async function iterateFolder(
   folderPath: string,
   callback: (filePath: string) => void | Promise<void>,

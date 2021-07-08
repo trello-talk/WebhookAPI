@@ -22,6 +22,8 @@ export function onWebhookSend(webhookID: string) {
 }
 
 async function collect(timestamp = new Date()) {
+  if (!process.env.INFLUX_DB_NAME) return;
+
   // Send to influx
   await this.influx.writePoints({
     measurement: 'webhook_traffic',

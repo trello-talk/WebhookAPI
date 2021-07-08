@@ -8,29 +8,10 @@ export interface TrelloPayload<T extends TrelloDefaultAction> {
     member?: TrelloUser;
     data: T;
   };
-  model: {
-    id: string;
-    name: string;
-    desc: string;
-    closed: boolean;
+  model: Required<TrelloBoard> & {
     idOrganization: string;
     pinned: boolean;
     url: string;
-    prefs: {
-      permissionLevel: TrelloPermissionLevel;
-      voting: TrelloPermissionLevel;
-      comments: TrelloPermissionLevel;
-      invitations: TrelloPermissionLevel;
-      selfJoin: boolean;
-      cardCovers: boolean;
-      canBePublic: boolean;
-      canBeOrg: boolean;
-      canBePrivate: boolean;
-      canInvite: boolean;
-    };
-    labelNames: {
-      [key: string]: string;
-    };
   };
 }
 
@@ -116,8 +97,23 @@ export interface TrelloBoard {
   id: string;
   name: string;
   shortLink: string;
-  idList?: string;
+  desc?: string;
   closed?: boolean;
+  prefs?: {
+    permissionLevel: TrelloPermissionLevel;
+    voting: TrelloPermissionLevel;
+    comments: TrelloPermissionLevel;
+    invitations: TrelloPermissionLevel;
+    selfJoin: boolean;
+    cardCovers: boolean;
+    canBePublic: boolean;
+    canBeOrg: boolean;
+    canBePrivate: boolean;
+    canInvite: boolean;
+  };
+  labelNames?: {
+    [key: string]: string;
+  };
 }
 
 export interface TrelloList {
@@ -138,8 +134,11 @@ export interface TrelloCard {
   name: string;
   idShort: number;
   shortLink: string;
+  desc?: string;
   idList?: string;
   closed?: boolean;
+  dueComplete?: boolean;
+  due?: string;
   dueReminder?: number | null;
   idAttachmentCover?: string;
   cover?: {

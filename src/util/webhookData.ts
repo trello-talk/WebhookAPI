@@ -3,13 +3,26 @@ import { Webhook } from '../db/postgres';
 import * as locale from './locale';
 import lodash from 'lodash';
 import Bottleneck from 'bottleneck';
-import { TrelloBoard, TrelloCard, TrelloCardSource, TrelloLabel, TrelloList, TrelloPayload } from './types';
+import {
+  TrelloBoard,
+  TrelloCard,
+  TrelloCardSource,
+  TrelloLabel,
+  TrelloList,
+  TrelloPayload,
+  TrelloUser
+} from './types';
 import { cardListMapCache } from '../cache';
 import { cutoffText, escapeMarkdown } from '.';
 import { logger } from '../logger';
 import { notifyWebhookError } from '../airbrake';
 
 export const batches = new Map<string, Bottleneck.Batcher>();
+
+interface ExtendedTrelloUser extends TrelloUser {
+  avatar?: string | null;
+  webhookSafeName?: string;
+}
 
 export default class WebhookData {
   request: FastifyRequest;
@@ -123,7 +136,7 @@ export default class WebhookData {
   /**
    * The member represented from the action
    */
-  get member() {
+  get member(): ExtendedTrelloUser {
     const member = this.action.member;
     return member
       ? {
