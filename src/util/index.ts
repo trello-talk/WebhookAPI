@@ -1,0 +1,72 @@
+import fs from 'fs/promises';
+import path from 'path';
+
+export async function iterateFolder(
+  folderPath: string,
+  callback: (filePath: string) => void | Promise<void>,
+  extension: string = '.js'
+) {
+  const files = await fs.readdir(folderPath);
+  await Promise.all(
+    files.map(async (file) => {
+      const filePath = path.join(folderPath, file);
+      const stat = await fs.lstat(filePath);
+      if (stat.isSymbolicLink()) {
+        const realPath = await fs.readlink(filePath);
+        if (stat.isFile() && file.endsWith(extension)) {
+          await callback(realPath);
+        } else if (stat.isDirectory()) {
+          await iterateFolder(realPath, callback, extension);
+        }
+      } else if (stat.isFile() && file.endsWith(extension)) await callback(filePath);
+      else if (stat.isDirectory()) await iterateFolder(filePath, callback, extension);
+    })
+  );
+}
+
+export function cutoffText(text: string, limit = 2000) {
+  return text.length > limit ? text.slice(0, limit - 1) + '…' : text;
+}
+
+export function escapeRegex(s) {
+  return s.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+}
+
+export function escapeMarkdown(text: string) {
+  function italic(text: string) {
+    let i = 0;
+    text = text.replace(/(?<=^|[^*])\*([^*]|\*\*|$)/g, (_, match) => {
+      if (match === '**') return ++i % 2 ? `\\*${match}` : `${match}\\*`;
+      return `\\*${match}`;
+    });
+    i = 0;
+    return text.replace(/(?<=^|[^_])_([^_]|__|$)/g, (_, match) => {
+      if (match === '__') return ++i % 2 ? `\\_${match}` : `${match}\\_`;
+      return `\\_${match}`;
+    });
+  }
+
+  function bold(text: string) {
+    let i = 0;
+    return text.replace(/\*\*(\*)?/g, (_, match) => {
+      if (match) return ++i % 2 ? `${match}\\*\\*` : `\\*\\*${match}`;
+      return '\\*\\*';
+    });
+  }
+
+  function underline(text: string) {
+    let i = 0;
+    return text.replace(/__(_)?/g, (_, match) => {
+      if (match) return ++i % 2 ? `${match}\\_\\_` : `\\_\\_${match}`;
+      return '\\_\\_';
+    });
+  }
+
+  text = text
+    .replace(/(?<=^|[^`])`(?=[^`]|$)/g, '\\`') // inlineCode
+    .replace(/```/g, '\\`\\`\\`'); // codeBlock
+  text = underline(bold(italic(text)));
+  return text
+    .replace(/~~/g, '\\~\\~') // strikethrough
+    .replace(/\|\|/g, '\\|\\|'); // spoiler
+}
