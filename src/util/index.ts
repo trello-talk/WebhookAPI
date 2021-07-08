@@ -3,6 +3,10 @@ import path from 'path';
 
 export const IMAGE_ATTACHMENT_HOST = 'https://trello-attachments.s3.amazonaws.com/';
 
+export function wait(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export async function iterateFolder(
   folderPath: string,
   callback: (filePath: string) => void | Promise<void>,

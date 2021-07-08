@@ -5,6 +5,7 @@ import { logger } from './logger';
 import { route, headRoute } from './endpoint';
 
 import { connect as pgConnect } from './db/postgres';
+import { connect as actionalConnect } from './db/actional';
 import { load as loadLocales } from './util/locale';
 import { load as loadEvents } from './util/events';
 import { cron as influxCron } from './db/influx';
@@ -19,6 +20,7 @@ export async function start(): Promise<void> {
 
   cacheCron.start();
   influxCron.start();
+  actionalConnect();
   await Promise.all([
     loadLocales(),
     loadEvents(),

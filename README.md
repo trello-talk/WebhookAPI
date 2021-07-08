@@ -4,6 +4,7 @@ The API to recieve webhook requests from Trello.
 # Requirements
 * PostgreSQL
 * InfluxDB (optional)
+* [Actional](https://github.com/Snazzah/Actional) (optional)
 * A running [Taco](https://github.com/trello-talk/Taco) instance
 
 # Installation
