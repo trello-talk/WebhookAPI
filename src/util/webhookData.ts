@@ -2,7 +2,7 @@ import { FastifyRequest } from 'fastify';
 import { Webhook } from '../db/postgres';
 import * as locale from './locale';
 import lodash from 'lodash';
-import Batcher from './batcher';
+import Batcher, { BatcherOptions } from './batcher';
 import {
   TrelloBoard,
   TrelloCard,
@@ -18,8 +18,48 @@ import { logger } from '../logger';
 import { notifyWebhookError } from '../airbrake';
 import { onWebhookSend } from '../db/influx';
 import { request } from './request';
+import { available as redisAvailable, client, subClient } from '../db/redis';
 
 export const batches = new Map<string, Batcher>();
+
+export interface TemporaryBatcherOptions<T = any> extends BatcherOptions {
+  onBatch(arr: T[]): any;
+}
+
+async function createTemporaryBatcher<T = any>(id: string, data: T, options: TemporaryBatcherOptions<T>) {
+  if (redisAvailable) {
+    const count = await client.publish(`batch_handoff:${id}`, JSON.stringify(data));
+    if (count > 0) {
+      logger.log(`Batch ${id} passed off to ${count} clients.`);
+      return;
+    }
+  }
+
+  if (batches.has(id)) return batches.get(id).add(data);
+
+  const batcher = new Batcher<T>(options);
+  const onMessage = async (channel: string, message: string) => {
+    if (channel === 'batch_handoff:' + id) {
+      logger.log(`Passed in a batch for ${id}`);
+      batcher.add(JSON.parse(message));
+    }
+  };
+  batches.set(id, batcher);
+  batcher.on('batch', async (arr) => {
+    batches.delete(id);
+    if (redisAvailable) {
+      subClient.off('message', onMessage);
+      await subClient.unsubscribe(`batch_handoff:${id}`);
+    }
+    return options.onBatch(arr);
+  });
+  batcher.add(data);
+
+  if (redisAvailable) {
+    subClient.on('message', onMessage);
+    await subClient.subscribe(`batch_handoff:${id}`);
+  }
+}
 
 interface ExtendedTrelloUser extends TrelloUser {
   avatar?: string | null;
@@ -350,69 +390,41 @@ export default class WebhookData {
         this.isChildAction() ? COMPACT_EMOJIS.CHILD : COMPACT_EMOJIS[this.filterFlag.split('_')[0]]
       }\` ${embedStyles.small.description}`;
 
-      if (batches.has(batchKey))
-        return (() => {
-          batches.get(batchKey).add(compactLine);
-        })();
-
-      const batcher = new Batcher({
+      createTemporaryBatcher(batchKey, compactLine, {
         maxTime: 2000,
-        maxSize: 10
+        maxSize: 10,
+        onBatch: (lines) => {
+          this._send(
+            lodash.defaultsDeep(
+              {
+                description: lines.join('\n')
+              },
+              EMBED_DEFAULTS.compact
+            )
+          );
+        }
       });
-      batches.set(batchKey, batcher);
-
-      batcher.on('batch', (lines) => {
-        batches.delete(batchKey);
-        this._send(
-          lodash.defaultsDeep(
-            {
-              description: lines.join('\n')
-            },
-            EMBED_DEFAULTS.compact
-          )
-        );
-      });
-
-      batcher.add(compactLine);
       return;
     }
 
-    return this._batch(
-      lodash.defaultsDeep(embedStyles[this.webhook.style], EMBED_DEFAULTS[this.webhook.style])
+    return createTemporaryBatcher(
+      this.webhook.webhookID,
+      lodash.defaultsDeep(embedStyles[this.webhook.style], EMBED_DEFAULTS[this.webhook.style]),
+      {
+        maxTime: 1000,
+        maxSize: 10,
+        onBatch: (embeds) => {
+          onWebhookSend(this.webhook.webhookID);
+          logger.info(
+            'Posting webhook %d (guild=%s, time=%d)',
+            this.webhook.webhookID,
+            this.webhook.guildID,
+            Date.now()
+          );
+          return this._send(embeds);
+        }
+      }
     );
-  }
-
-  /**
-   * batches and sends the raw embed
-   * @private
-   */
-  private async _batch(embed: any) {
-    if (batches.has(this.webhook.webhookID))
-      // Since Batcher#add returns a promise that resolves after a flush, this won't return the promise and
-      // therefore won't halt the request until flushed.
-      return (() => {
-        batches.get(this.webhook.webhookID).add(embed);
-      })();
-
-    const batcher = new Batcher({
-      maxTime: 1000,
-      maxSize: 10
-    });
-    batches.set(this.webhook.webhookID, batcher);
-
-    batcher.on('batch', async (embeds) => {
-      batches.delete(this.webhook.webhookID);
-      onWebhookSend(this.webhook.webhookID);
-      logger.info(
-        'Posting webhook %d (guild=%s, time=%d)',
-        this.webhook.webhookID,
-        this.webhook.guildID,
-        Date.now()
-      );
-      return this._send(embeds);
-    });
-
-    batcher.add(embed);
   }
 
   private async _send(embeds: any[], attempt = 1) {
