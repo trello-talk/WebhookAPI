@@ -417,7 +417,7 @@ export default class WebhookData {
 
   private async _send(embeds: any[], attempt = 1) {
     try {
-      return await request('GET', `/webhooks/${this.webhook.webhookID}/${this.webhook.webhookToken}`, {
+      return await request('POST', `/webhooks/${this.webhook.webhookID}/${this.webhook.webhookToken}`, {
         embeds
       });
     } catch (e) {
