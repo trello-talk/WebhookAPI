@@ -94,7 +94,7 @@ export const route: RouteOptions = {
     logger.log(`Incoming request @ memberID=${id}, modelID=${body.model.id}`, ip);
 
     if (!filterFound) {
-      logger.log(`Unknown filter: ${body.action.type} / ${filter}`, body.action.data);
+      logger.info(`Unknown filter: ${body.action.type} / ${filter}`, body.action.data);
       return reply.status(200).send('Recieved');
     }
 

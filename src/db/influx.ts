@@ -23,7 +23,6 @@ export function onWebhookSend(webhookID: string) {
 
 async function collect(timestamp = new Date()) {
   if (!process.env.INFLUX_DB_NAME) return;
-  if (!timestamp) timestamp = cron.lastDate() || new Date();
 
   // Send to influx
   await client.writePoints([
@@ -34,7 +33,7 @@ async function collect(timestamp = new Date()) {
         sent: webhooksSent,
         sentUnique: activeWebhooks.length
       },
-      timestamp
+      timestamp: timestamp || cron.lastDate()
     }
   ]);
 
