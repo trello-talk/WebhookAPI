@@ -1,9 +1,10 @@
 # Taco WebhookAPI
 The API to recieve webhook requests from Trello.
 
-# Requirements
-* PostgreSQL
-* InfluxDB (optional)
+# Prerequisites
+* [PostgreSQL](https://www.postgresql.org/) ([download & install](https://www.postgresql.org/download/))
+* [Redis](https://redis.io/) (optional, [quickstart](https://redis.io/topics/quickstart))
+* [InfluxDB](https://docs.influxdata.com/influxdb) (optional, [install](https://docs.influxdata.com/influxdb/v1.8/introduction/install/))
 * [Actional](https://github.com/Snazzah/Actional) (optional)
 * A running [Taco](https://github.com/trello-talk/Taco) instance
 
