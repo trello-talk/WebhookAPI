@@ -2,7 +2,7 @@ import { EventFunction } from '../../../util/events';
 import { cutoffText } from '../../../util';
 
 export const event: EventFunction = {
-  name: 'DELETE_CHECK_ITEM',
+  name: 'UPDATE_CHECK_ITEM_STATE_ON_CARD',
   async onEvent(data) {
     const _ = data.locale;
     return data.send({
