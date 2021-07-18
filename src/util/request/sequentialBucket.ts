@@ -43,7 +43,7 @@ export default class SequentialBucket {
   }
 
   get redisKey() {
-    return `${this.route}:bucket`;
+    return `bucket:${this.route}`;
   }
 
   async setValues({ remaining, reset }: { remaining?: number; reset?: number } = {}) {
