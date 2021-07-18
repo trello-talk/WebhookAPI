@@ -2,7 +2,7 @@ import { FastifyRequest } from 'fastify';
 import { Webhook } from '../db/postgres';
 import * as locale from './locale';
 import lodash from 'lodash';
-import Bottleneck from 'bottleneck';
+import Batcher from './batcher';
 import {
   TrelloBoard,
   TrelloCard,
@@ -19,7 +19,7 @@ import { notifyWebhookError } from '../airbrake';
 import { onWebhookSend } from '../db/influx';
 import { request } from './request';
 
-export const batches = new Map<string, Bottleneck.Batcher>();
+export const batches = new Map<string, Batcher>();
 
 interface ExtendedTrelloUser extends TrelloUser {
   avatar?: string | null;
@@ -355,7 +355,7 @@ export default class WebhookData {
           batches.get(batchKey).add(compactLine);
         })();
 
-      const batcher = new Bottleneck.Batcher({
+      const batcher = new Batcher({
         maxTime: 2000,
         maxSize: 10
       });
@@ -394,7 +394,7 @@ export default class WebhookData {
         batches.get(this.webhook.webhookID).add(embed);
       })();
 
-    const batcher = new Bottleneck.Batcher({
+    const batcher = new Batcher({
       maxTime: 1000,
       maxSize: 10
     });
