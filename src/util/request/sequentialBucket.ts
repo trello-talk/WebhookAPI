@@ -1,8 +1,4 @@
-// import { available as redisAvailable, client } from '../../db/redis';
-import { client } from '../../db/redis';
-
-// Webhook requests don't have ratelimit headers, let's not use redis
-const redisAvailable = false;
+import { available as redisAvailable, client } from '../../db/redis';
 
 /** @hidden */
 export interface MinimalLatencyRef {
