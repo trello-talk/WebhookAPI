@@ -92,8 +92,8 @@ export const route: RouteOptions = {
     const [filter, filterFound] = findFilter(body);
 
     logger.log(
-      `Incoming request @ memberID=${id}, modelID=${body.model.id} filter=${filter} filterFound=${filterFound}`,
-      ip
+      `Incoming request @ ip=${ip} memberID=${id}, modelID=${body.model.id} filter=${filter}`,
+      body.action.data
     );
 
     if (!filterFound) {
