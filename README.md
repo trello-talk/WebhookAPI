@@ -16,4 +16,5 @@ The API to recieve webhook requests from Trello.
 
 # Usage
 In a development environment: Run `yarn dev`
-In a production environment: Run `yarn build`, then `yarn start`
+In a production environment: Run `yarn build`, then `NODE_ENV=production yarn start`
+Using PM2 in a production environment: Run `yarn build`, then `pm2 start pm2.json --env production`

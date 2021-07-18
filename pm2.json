@@ -1,0 +1,15 @@
+{
+	"apps": [
+		{
+			"name": "WebhookAPI",
+			"script": "node",
+			"args": "src/index.js",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "env_production": {
+        "NODE_ENV": "production"
+      }
+		}
+	]
+}

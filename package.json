@@ -1,9 +1,9 @@
 {
   "name": "tacobot-api",
   "version": "1.0.0",
-  "description": "API backend for taco-dashboard",
+  "description": "Webhook API for recieving Trello requests",
   "main": "index.js",
-  "repository": "https://github.com/trello-talk/API",
+  "repository": "https://github.com/trello-talk/WebhookAPI",
   "author": "Snazzah",
   "license": "MIT",
   "scripts": {
