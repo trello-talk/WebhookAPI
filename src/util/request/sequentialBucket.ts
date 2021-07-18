@@ -103,8 +103,8 @@ export default class SequentialBucket {
     const offset = this.latencyRef.latency + (this.latencyRef.offset || 0);
     if (!this.reset || this.reset < now - offset) {
       // When the bucket expires, leave the redis to expire as well
+      this.reset = now - offset;
       this.remaining = this.limit;
-      this.limit = now - offset;
     }
     this.last = now;
     if (this.remaining <= 0) {
