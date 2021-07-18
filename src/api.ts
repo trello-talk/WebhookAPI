@@ -10,7 +10,6 @@ import { connect as redisConnect, disconnect as redisDisconnect } from './db/red
 import { load as loadLocales } from './util/locale';
 import { load as loadEvents } from './util/events';
 import { cron as influxCron } from './db/influx';
-import { cron as restCron } from './util/request';
 import { cron as cacheCron } from './cache';
 
 export let server: FastifyInstance;
@@ -24,7 +23,6 @@ export async function start(): Promise<void> {
 
   cacheCron.start();
   influxCron.start();
-  restCron.start();
   actionalConnect();
   await Promise.all([
     loadLocales(),
@@ -76,7 +74,6 @@ export async function stop(): Promise<void> {
   logger.info('Shutting down...');
   cacheCron.stop();
   influxCron.stop();
-  restCron.stop();
   await server.close();
   await pgDisconnect();
   redisDisconnect();

@@ -5,7 +5,6 @@ import DiscordHTTPError from './DiscordHTTPError';
 import DiscordRESTError from './DiscordRESTError';
 import MultipartData from './multipartData';
 import { logger } from '../../logger';
-import { CronJob } from 'cron';
 
 export const USER_AGENT = `DiscordBot (https://github.com/trello-talk/WebhookAPI, ${
   require('../../../package.json').version
@@ -14,14 +13,12 @@ export const USER_AGENT = `DiscordBot (https://github.com/trello-talk/WebhookAPI
 export const API_VERSION = 8;
 export const API_BASE_URL = `/api/v${API_VERSION}`;
 
-function clearBuckets() {
+export function cleanBuckets() {
   for (const route in ratelimits) {
     const bucket = ratelimits[route];
     if (bucket.reset < Date.now()) delete ratelimits[route];
   }
 }
-
-export const cron = new CronJob('0 0 * * * *', clearBuckets, null, false, 'America/New_York');
 
 const requestTimeout = parseInt(process.env.REQUEST_TIMEOUT, 10) || 15000;
 const latencyThreshold = parseInt(process.env.LATENCY_THRESHOLD, 10) || 30000;

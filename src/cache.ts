@@ -3,8 +3,14 @@ import { CronJob } from 'cron';
 import { logger } from './logger';
 import { getUser, Webhook } from './db/postgres';
 import { available as redisAvailable, getCache, setCache } from './db/redis';
+import { cleanBuckets } from './util/request';
 
 export const cardListMapCache = new Map<string, [number, string]>();
+
+export function cacheCronTick() {
+  cleanListIDCache();
+  cleanBuckets();
+}
 
 export function cleanListIDCache() {
   Array.from(cardListMapCache).forEach(([cardID, [timestamp]]) => {
