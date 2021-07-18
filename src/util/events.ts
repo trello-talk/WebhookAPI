@@ -17,7 +17,7 @@ export const load = () => iterateFolder(path.resolve(__dirname, '../events'), lo
 export function loadEvent(filePath: string) {
   logger.debug('Loading event', filePath);
   const file = require(filePath);
-  if (file.event) events.set(file.name, file.onEvent);
+  if (file.event) events.set(file.event.name, file.event.onEvent);
 }
 
 export function findFilter(payload: TrelloPayload<any>): [string, boolean] {

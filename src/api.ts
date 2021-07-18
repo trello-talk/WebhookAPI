@@ -78,5 +78,6 @@ export async function stop(): Promise<void> {
   await pgDisconnect();
   redisDisconnect();
   actionalDisconnect();
+  logger.info('All things disconnected.');
   process.exit(0);
 }
