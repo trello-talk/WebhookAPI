@@ -12,32 +12,34 @@ export const client = new InfluxDB({
 
 export const cron = new CronJob('*/5 * * * *', collect, null, false, 'America/New_York');
 
-export const activeWebhooks: string[] = [];
-export const webhooksSent = 0;
+export let activeWebhooks: string[] = [];
+export let webhooksSent = 0;
 
 export function onWebhookSend(webhookID: string) {
-  if (!this.activeWebhooks.includes(webhookID)) this.activeWebhooks.push(webhookID);
+  if (!activeWebhooks.includes(webhookID)) activeWebhooks.push(webhookID);
 
-  this.webhooksSent++;
+  webhooksSent++;
 }
 
 async function collect(timestamp = new Date()) {
   if (!process.env.INFLUX_DB_NAME) return;
 
   // Send to influx
-  await this.influx.writePoints({
-    measurement: 'webhook_traffic',
-    tags: {},
-    fields: {
-      sent: this.webhooksSent,
-      sentUnique: this.activeWebhooks.length
-    },
-    timestamp
-  });
+  await client.writePoints([
+    {
+      measurement: 'webhook_traffic',
+      tags: {},
+      fields: {
+        sent: webhooksSent,
+        sentUnique: activeWebhooks.length
+      },
+      timestamp
+    }
+  ]);
 
   // Flush data for next cron run
-  this.activeWebhooks = [];
-  this.webhooksSent = 0;
+  activeWebhooks = [];
+  webhooksSent = 0;
 
   logger.log('Sent stats to Influx.');
 }
