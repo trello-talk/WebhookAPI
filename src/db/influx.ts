@@ -1,4 +1,4 @@
-import { InfluxDB } from 'influx';
+import { InfluxDB, FieldType } from 'influx';
 import { CronJob } from 'cron';
 import { logger } from '../logger';
 
@@ -7,7 +7,17 @@ export const client = new InfluxDB({
   host: process.env.INFLUX_DB_HOST,
   port: parseInt(process.env.INFLUX_DB_PORT, 10),
   username: process.env.INFLUX_DB_USER,
-  password: process.env.INFLUX_DB_PASSWORD
+  password: process.env.INFLUX_DB_PASSWORD,
+  schema: [
+    {
+      measurement: 'webhook_traffic',
+      fields: {
+        sent: FieldType.INTEGER,
+        sentUnique: FieldType.INTEGER
+      },
+      tags: ['bot', 'cluster']
+    }
+  ]
 });
 
 export const cron = new CronJob('*/5 * * * *', collect, null, false, 'America/New_York');
@@ -28,7 +38,10 @@ async function collect(timestamp = new Date()) {
   await client.writePoints([
     {
       measurement: 'webhook_traffic',
-      tags: {},
+      tags: {
+        bot: 'webhookapi',
+        cluster: process.env.CLUSTER_NAME
+      },
       fields: {
         sent: webhooksSent,
         sentUnique: activeWebhooks.length

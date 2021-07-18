@@ -67,6 +67,9 @@ export async function start(): Promise<void> {
   if (process.send) process.send('ready');
 
   process.on('SIGINT', stop);
+  process.on('unhandledRejection', (err) => {
+    logger.error('Unhandled rejection', err);
+  });
 }
 
 export async function stop(): Promise<void> {

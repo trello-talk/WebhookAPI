@@ -61,7 +61,11 @@ export default class SequentialBucket {
 
     if (redisAvailable) {
       await client.hset(this.redisKey, ...args);
-      if (reset !== undefined) await client.expire(this.redisKey, (reset - Date.now()) / 1000);
+      if (reset !== undefined) {
+        const now = Date.now();
+        const offset = this.latencyRef.latency + (this.latencyRef.offset || 0);
+        await client.pexpire(this.redisKey, reset - (now - offset));
+      }
     }
   }
 
@@ -97,8 +101,11 @@ export default class SequentialBucket {
     await this.sync();
     const now = Date.now();
     const offset = this.latencyRef.latency + (this.latencyRef.offset || 0);
-    if (!this.reset || this.reset < now - offset)
-      await this.setValues({ remaining: this.limit, reset: now - offset });
+    if (!this.reset || this.reset < now - offset) {
+      // When the bucket expires, leave the redis to expire as well
+      this.remaining = this.limit;
+      this.limit = now - offset;
+    }
     this.last = now;
     if (this.remaining <= 0) {
       this.processingTimeout = setTimeout(() => {

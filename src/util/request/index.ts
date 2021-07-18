@@ -36,11 +36,7 @@ const latencyRef = {
 };
 
 function getRoute(url: string) {
-  const route = url
-    .replace(/\/([a-z-]+)\/(?:[0-9]{17,19})/g, function (match, p) {
-      return p === 'webhooks' ? match : `/${p}/:id`;
-    })
-    .replace(/^\/webhooks\/(\d+)\/[A-Za-z0-9-_]{64,}/, '/webhooks/$1/:token');
+  const route = url.replace(/^\/webhooks\/(\d+)\/[A-Za-z0-9-_]{64,}/, '/webhooks/$1/:token');
   return route;
 }
 
