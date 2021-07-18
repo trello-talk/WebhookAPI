@@ -1,5 +1,5 @@
 import { Client } from 'actional';
-import { wait } from '../util';
+import { stop } from '../api';
 
 export let client: Client = null;
 
@@ -22,8 +22,7 @@ export const connect = (): void => {
     client.defineEvent('shutdown', () => {
       return new Promise((resolve) => {
         resolve(null);
-        client.socket.disconnect();
-        wait(1000).then(() => process.exit());
+        stop();
       });
     });
   }

@@ -1,4 +1,4 @@
-import fastify from 'fastify';
+import fastify, { FastifyInstance } from 'fastify';
 import helmet from 'fastify-helmet';
 import middie from 'middie';
 import { logger } from './logger';
@@ -16,8 +16,10 @@ import { load as loadEvents } from './util/events';
 import { cron as influxCron } from './db/influx';
 import { job as cacheCron } from './cache';
 
+export let server: FastifyInstance;
+
 export async function start(): Promise<void> {
-  const server = fastify({
+  server = fastify({
     logger: process.env.NODE_ENV !== 'production',
     ignoreTrailingSlash: true,
     bodyLimit: 262144 // 250KiB
@@ -66,14 +68,16 @@ export async function start(): Promise<void> {
   // PM2 graceful start/shutdown
   if (process.send) process.send('ready');
 
-  process.on('SIGINT', async function () {
-    logger.info('Shutting down...');
-    if (!redisAvailable) cacheCron.stop();
-    influxCron.stop();
-    await server.close();
-    await pgDisconnect();
-    redisDisconnect();
-    actionalDisconnect();
-    process.exit(0);
-  });
+  process.on('SIGINT', stop);
+}
+
+export async function stop(): Promise<void> {
+  logger.info('Shutting down...');
+  if (!redisAvailable) cacheCron.stop();
+  influxCron.stop();
+  await server.close();
+  await pgDisconnect();
+  redisDisconnect();
+  actionalDisconnect();
+  process.exit(0);
 }
