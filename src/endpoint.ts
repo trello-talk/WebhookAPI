@@ -12,7 +12,7 @@ import WebhookData from './util/webhookData';
 import WebhookFilters from './util/webhookFilters';
 import { notifyWebserverError } from './airbrake';
 
-export const whitelistedIPs = process.env.WHITELISTED_IPS.split(',');
+export const whitelistedIPs = process.env.WHITELISTED_IPS ? process.env.WHITELISTED_IPS.split(',') : [];
 
 export function validateRequest(request: FastifyRequest<RouteGenericInterface, Server, IncomingMessage>) {
   const { id } = request.params as { id: string };
