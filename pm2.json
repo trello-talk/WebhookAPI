@@ -3,7 +3,7 @@
 		{
 			"name": "WebhookAPI",
 			"script": "node",
-			"args": "src/index.js",
+			"args": "dist/index.js",
       "wait_ready": true,
       "listen_timeout": 10000,
       "kill_timeout": 3000,
