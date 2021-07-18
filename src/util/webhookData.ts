@@ -394,14 +394,14 @@ export default class WebhookData {
         maxTime: 2000,
         maxSize: 10,
         onBatch: (lines) => {
-          this._send(
+          this._send([
             lodash.defaultsDeep(
               {
                 description: lines.join('\n')
               },
               EMBED_DEFAULTS.compact
             )
-          );
+          ]);
         }
       });
       return;
@@ -444,7 +444,7 @@ export default class WebhookData {
             { where: { id: this.webhook.id } }
           );
         } else if (e.code === 400) {
-          logger.error(`Invalid request, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`, e);
+          logger.error(`Invalid form body, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`, e);
         } else {
           attempt++;
           if (attempt > 3) {
