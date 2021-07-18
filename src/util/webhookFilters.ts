@@ -1,4 +1,4 @@
-import BitField from './bitField';
+import BitField from './bitfield';
 
 /**
  * The bitfield that determines what gets through a webhook
