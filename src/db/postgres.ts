@@ -121,6 +121,8 @@ interface UserAttributes {
 
 export const connect = (): Promise<unknown> => client.authenticate();
 
+export const disconnect = (): Promise<void> => client.close();
+
 export async function getUser(id: string): Promise<UserAttributes> {
   const user = (await client.query({
     query: 'SELECT * FROM users WHERE "userID"=?',

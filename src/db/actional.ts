@@ -28,3 +28,7 @@ export const connect = (): void => {
     });
   }
 };
+
+export const disconnect = (): void => {
+  if (client) client.socket.disconnect();
+};

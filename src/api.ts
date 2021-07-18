@@ -4,8 +4,13 @@ import middie from 'middie';
 import { logger } from './logger';
 import { route, headRoute } from './endpoint';
 
-import { connect as pgConnect } from './db/postgres';
-import { connect as actionalConnect } from './db/actional';
+import { connect as pgConnect, disconnect as pgDisconnect } from './db/postgres';
+import { connect as actionalConnect, disconnect as actionalDisconnect } from './db/actional';
+import {
+  connect as redisConnect,
+  disconnect as redisDisconnect,
+  available as redisAvailable
+} from './db/redis';
 import { load as loadLocales } from './util/locale';
 import { load as loadEvents } from './util/events';
 import { cron as influxCron } from './db/influx';
@@ -18,13 +23,14 @@ export async function start(): Promise<void> {
     bodyLimit: 262144 // 250KiB
   });
 
-  cacheCron.start();
+  if (!redisAvailable) cacheCron.start();
   influxCron.start();
   actionalConnect();
   await Promise.all([
     loadLocales(),
     loadEvents(),
     pgConnect(),
+    redisConnect(),
     server.register(middie),
     server.register(helmet)
   ]);
@@ -57,9 +63,17 @@ export async function start(): Promise<void> {
   await server.listen({ port });
   logger.info(`Running webhook on port ${port}`);
 
+  // PM2 graceful start/shutdown
+  if (process.send) process.send('ready');
+
   process.on('SIGINT', async function () {
     logger.info('Shutting down...');
+    if (!redisAvailable) cacheCron.stop();
+    influxCron.stop();
     await server.close();
+    await pgDisconnect();
+    redisDisconnect();
+    actionalDisconnect();
     process.exit(0);
   });
 }
