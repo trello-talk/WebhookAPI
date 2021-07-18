@@ -21,7 +21,7 @@ export const load = () => iterateFolder(path.join(__dirname, '../../locale/bot')
 export function loadFile(filePath: string) {
   logger.log('Loading locale', filePath);
   const json = require(filePath);
-  this.locales.set(path.parse(filePath).name, json);
+  locales.set(path.parse(filePath).name, json);
 }
 
 export const sourceLocale = 'en_US';
