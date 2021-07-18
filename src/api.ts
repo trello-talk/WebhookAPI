@@ -6,15 +6,12 @@ import { route, headRoute } from './endpoint';
 
 import { connect as pgConnect, disconnect as pgDisconnect } from './db/postgres';
 import { connect as actionalConnect, disconnect as actionalDisconnect } from './db/actional';
-import {
-  connect as redisConnect,
-  disconnect as redisDisconnect,
-  available as redisAvailable
-} from './db/redis';
+import { connect as redisConnect, disconnect as redisDisconnect } from './db/redis';
 import { load as loadLocales } from './util/locale';
 import { load as loadEvents } from './util/events';
 import { cron as influxCron } from './db/influx';
-import { job as cacheCron } from './cache';
+import { cron as restCron } from './util/request';
+import { cron as cacheCron } from './cache';
 
 export let server: FastifyInstance;
 
@@ -25,8 +22,9 @@ export async function start(): Promise<void> {
     bodyLimit: 262144 // 250KiB
   });
 
-  if (!redisAvailable) cacheCron.start();
+  cacheCron.start();
   influxCron.start();
+  restCron.start();
   actionalConnect();
   await Promise.all([
     loadLocales(),
@@ -73,8 +71,9 @@ export async function start(): Promise<void> {
 
 export async function stop(): Promise<void> {
   logger.info('Shutting down...');
-  if (!redisAvailable) cacheCron.stop();
+  cacheCron.stop();
   influxCron.stop();
+  restCron.stop();
   await server.close();
   await pgDisconnect();
   redisDisconnect();

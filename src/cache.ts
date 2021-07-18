@@ -55,4 +55,4 @@ export async function getListID(cardID: string, boardID: string, webhook: Webhoo
   } else return null;
 }
 
-export const job = new CronJob('0 0 * * * *', cleanListIDCache, null, false, 'America/New_York');
+export const cron = new CronJob('0 0 * * * *', cleanListIDCache, null, false, 'America/New_York');

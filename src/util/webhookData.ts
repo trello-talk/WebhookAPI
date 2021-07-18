@@ -16,6 +16,8 @@ import { cardListMapCache } from '../cache';
 import { cutoffText, escapeMarkdown } from '.';
 import { logger } from '../logger';
 import { notifyWebhookError } from '../airbrake';
+import { onWebhookSend } from '../db/influx';
+import { request } from './request';
 
 export const batches = new Map<string, Bottleneck.Batcher>();
 
@@ -37,13 +39,6 @@ export default class WebhookData {
 
     this.filterFlag = filterFlag;
     this.locale = locale.toModule(this.webhook.locale);
-  }
-
-  /**
-   * The webhook URL the data is posting to
-   */
-  get webhookURL() {
-    return `https://discord.com/api/webhooks/${this.webhook.webhookID}/${this.webhook.webhookToken}`;
   }
 
   /**
@@ -407,8 +402,7 @@ export default class WebhookData {
 
     batcher.on('batch', async (embeds) => {
       batches.delete(this.webhook.webhookID);
-      // TODO: send stat to influx
-      // this.client.stats.onWebhookSend(this.webhook.webhookID);
+      onWebhookSend(this.webhook.webhookID);
       logger.info(
         'Posting webhook %d (guild=%s, time=%d)',
         this.webhook.webhookID,
@@ -423,11 +417,9 @@ export default class WebhookData {
 
   private async _send(embeds: any[], attempt = 1) {
     try {
-      // TODO: execute webhook w/ ratelimiting
-      // return await this.webserver.client.executeWebhook(this.webhook.webhookID, this.webhook.webhookToken, {
-      //   embeds
-      // });
-      throw new Error('Not implemented');
+      return await request('GET', `webhooks/${this.webhook.webhookID}/${this.webhook.webhookToken}`, {
+        embeds
+      });
     } catch (e) {
       if (e.name.startsWith('DiscordRESTError')) {
         if (e.code === 10015) {
