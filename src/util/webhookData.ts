@@ -443,9 +443,11 @@ export default class WebhookData {
             },
             { where: { id: this.webhook.id } }
           );
+        } else if (e.code === 400) {
+          logger.error(`Invalid request, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`, e);
         } else {
           attempt++;
-          if (attempt < 3) {
+          if (attempt > 3) {
             logger.error(
               `Discord Error ${e.code}, exceeded attempts, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`
             );
