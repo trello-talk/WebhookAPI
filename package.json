@@ -8,6 +8,7 @@
   "license": "MIT",
   "scripts": {
     "start": "cd dist && node index.js",
+    "build": "tsc",
     "lint": "npx eslint --ext .ts ./src",
     "lint:fix": "npx eslint --ext .ts ./src --fix",
     "init": "yarn && rimraf dist && tsc && devScript --copyOnly",
