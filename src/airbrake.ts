@@ -1,7 +1,7 @@
-import Airbrake from '@airbrake/node';
+import { Notifier } from '@airbrake/node';
 import { Webhook } from './db/postgres';
 
-export const airbrake = new Airbrake.Notifier({
+export const airbrake = new Notifier({
   projectId: parseInt(process.env.AIRBRAKE_PROJECT_ID, 10),
   projectKey: process.env.AIRBRAKE_PROJECT_KEY,
   environment: 'webhook-' + process.env.NODE_ENV,
