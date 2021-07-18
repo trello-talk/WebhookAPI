@@ -16,7 +16,7 @@
   "dependencies": {
     "@airbrake/node": "^2.1.5",
     "actional": "^0.1.4",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "bottleneck": "^2.19.5",
     "cat-loggr": "^1.2.2",
     "cron": "^1.8.2",
