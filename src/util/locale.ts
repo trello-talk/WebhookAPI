@@ -16,7 +16,7 @@ export interface LocaleModule {
 }
 
 export const locales = new Map<string, any>();
-export const load = () => iterateFolder(path.join(__dirname, '../../locales/bot'), loadFile, '.json');
+export const load = () => iterateFolder(path.join(__dirname, '../../locale/bot'), loadFile, '.json');
 
 export function loadFile(filePath: string) {
   logger.log('Loading locale', filePath);
