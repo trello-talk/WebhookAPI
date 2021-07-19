@@ -18,7 +18,7 @@ import { logger } from '../logger';
 import { notifyWebhookError } from '../airbrake';
 import { onWebhookSend } from '../db/influx';
 import { request } from './request';
-import { available as redisAvailable, client, subClient } from '../db/redis';
+import { available as redisAvailable, client, subClient, batchHandoffs } from '../db/redis';
 
 export const batches = new Map<string, Batcher>();
 
@@ -38,17 +38,11 @@ async function createTemporaryBatcher<T = any>(id: string, data: T, options: Tem
   if (batches.has(id)) return batches.get(id).add(data);
 
   const batcher = new Batcher<T>(options);
-  const onMessage = async (channel: string, message: string) => {
-    if (channel === 'batch_handoff:' + id) {
-      logger.log(`Passed in a batch for ${id}`);
-      batcher.add(JSON.parse(message));
-    }
-  };
   batches.set(id, batcher);
   batcher.on('batch', async (arr) => {
     batches.delete(id);
     if (redisAvailable) {
-      subClient.off('message', onMessage);
+      batchHandoffs.delete(id);
       await subClient.unsubscribe(`batch_handoff:${id}`);
     }
     return options.onBatch(arr);
@@ -56,7 +50,7 @@ async function createTemporaryBatcher<T = any>(id: string, data: T, options: Tem
   batcher.add(data);
 
   if (redisAvailable) {
-    subClient.on('message', onMessage);
+    batchHandoffs.set(id, batcher);
     await subClient.subscribe(`batch_handoff:${id}`);
   }
 }

@@ -1,4 +1,6 @@
 import Redis from 'ioredis';
+import { logger } from '../logger';
+import Batcher from '../util/batcher';
 
 export const client = new Redis({
   host: process.env.REDIS_HOST,
@@ -17,6 +19,18 @@ export const subClient = new Redis({
 });
 
 export const available = process.env.REDIS_HOST && process.env.REDIS_PORT;
+
+export const batchHandoffs = new Map<string, Batcher>();
+
+subClient.on('message', (channel, message) => {
+  const prefix = 'batch_handoff:';
+  if (!channel.startsWith(prefix)) return;
+  const id = channel.slice(prefix.length);
+  if (batchHandoffs.has(id)) {
+    logger.log(`Passed in a batch for ${id}`);
+    batchHandoffs.get(id).add(JSON.parse(message));
+  }
+});
 
 export const connect = async () => {
   if (available) {
