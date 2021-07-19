@@ -388,14 +388,24 @@ export default class WebhookData {
         maxTime: 2000,
         maxSize: 10,
         onBatch: (lines) => {
-          this._send([
-            lodash.defaultsDeep(
-              {
-                description: lines.join('\n')
-              },
-              EMBED_DEFAULTS.compact
-            )
-          ]);
+          createTemporaryBatcher(
+            this.webhook.webhookID,
+            lodash.defaultsDeep({ description: lines.join('\n') }, EMBED_DEFAULTS.compact),
+            {
+              maxTime: 1000,
+              maxSize: 10,
+              onBatch: (embeds) => {
+                onWebhookSend(this.webhook.webhookID);
+                logger.info(
+                  'Posting webhook %d (guild=%s, time=%d)',
+                  this.webhook.webhookID,
+                  this.webhook.guildID,
+                  Date.now()
+                );
+                return this._send(embeds);
+              }
+            }
+          );
         }
       });
       return;
