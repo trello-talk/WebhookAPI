@@ -22,7 +22,7 @@ export async function getListID(cardID: string, boardID: string, webhook: Webhoo
   if (cardListMapCache.has(cardID)) return cardListMapCache.get(cardID)![1];
 
   if (redisAvailable) {
-    const listID = await getCache(cardID);
+    const listID = await getCache('card:' + cardID);
     if (listID) return listID;
   }
 
@@ -52,7 +52,7 @@ export async function getListID(cardID: string, boardID: string, webhook: Webhoo
       for (const { id, idList } of cards) {
         if (id === cardID) resultID = idList;
         if (redisAvailable) {
-          await setCache(id, idList);
+          await setCache('card:' + id, idList);
         } else cardListMapCache.set(id, [Date.now(), idList]);
       }
 
