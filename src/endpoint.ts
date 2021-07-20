@@ -14,14 +14,14 @@ import { notifyWebserverError } from './airbrake';
 
 export const whitelistedIPs = process.env.WHITELISTED_IPS ? process.env.WHITELISTED_IPS.split(',') : [];
 
-export function validateRequest(request: FastifyRequest<RouteGenericInterface, Server, IncomingMessage>) {
+function validateRequest(request: FastifyRequest<RouteGenericInterface, Server, IncomingMessage>) {
   const { id } = request.params as { id: string };
   const content = JSON.stringify(request.body) + process.env.API_URL + id;
   const hash = createHmac('sha1', process.env.TRELLO_SECRET).update(content).digest('base64');
   return hash === request.headers['x-trello-webhook'];
 }
 
-export async function canBeSent(webhook: Webhook, body: TrelloPayload<any>) {
+async function canBeSent(webhook: Webhook, body: TrelloPayload<any>) {
   const actionData = body.action.data;
   const boardID = body.model.id;
   const list = actionData.list || actionData.listAfter;
