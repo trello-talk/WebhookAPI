@@ -433,31 +433,31 @@ export default class WebhookData {
 
   private async _send(embeds: any[], attempt = 1) {
     try {
-      return await request('POST', `/webhooks/${this.webhook.webhookID}/${this.webhook.webhookToken}`, {
+      await request('POST', `/webhooks/${this.webhook.webhookID}/${this.webhook.webhookToken}`, {
         embeds
       });
     } catch (e) {
       if (e.name.startsWith('DiscordRESTError')) {
         if (e.code === 10015) {
           logger.warn(`Discord webhook lost @ ${this.webhook.webhookID}:${this.webhook.id}`, e);
-          return await Webhook.update(
+          await Webhook.update(
             {
               webhookID: null,
               webhookToken: null
             },
             { where: { id: this.webhook.id } }
           );
-        } else if (e.code === 400) {
+        } else if (e.status === 400) {
           logger.error(`Invalid form body, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`, e);
         } else {
           attempt++;
           if (attempt > 3) {
             logger.error(
-              `Discord Error ${e.code}, exceeded attempts, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`
+              `Discord Error ${e.code} (${e.status}), exceeded attempts, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`
             );
           } else {
             logger.warn(
-              `Discord Error ${e.code}, retrying (${attempt}) @ ${this.webhook.webhookID}:${this.webhook.id}`
+              `Discord Error ${e.code} (${e.status}), retrying (${attempt}) @ ${this.webhook.webhookID}:${this.webhook.id}`
             );
             return this._send(embeds, attempt);
           }

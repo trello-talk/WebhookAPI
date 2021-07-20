@@ -9,6 +9,8 @@ class DiscordRESTError extends Error {
   /** The response class from a {@link Server}. */
   readonly response: any;
   /** The error code from the response. */
+  readonly status: number;
+  /** The error code from Discord. */
   readonly code: number;
   /** The message of the error. */
   readonly message: string;
@@ -27,7 +29,8 @@ class DiscordRESTError extends Error {
     this.req = req;
     this.res = res;
     this.response = response;
-    this.code = res.statusCode as number;
+    this.status = res.statusCode as number;
+    this.code = response.code as number || 0;
 
     let message = response.message || 'Unknown error';
     if (response.errors) message += '\n  ' + this.flattenErrors(response.errors).join('\n  ');

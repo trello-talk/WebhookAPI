@@ -9,7 +9,7 @@ class DiscordHTTPError extends Error {
   /** The response class from a {@link Server}. */
   readonly response: any;
   /** The status code from the response. */
-  readonly code: number;
+  readonly status: number;
   /** The response message. */
   readonly message: string;
   /** The error stack. */
@@ -27,7 +27,7 @@ class DiscordHTTPError extends Error {
     this.req = req;
     this.res = res;
     this.response = response;
-    this.code = res.statusCode as number;
+    this.status = res.statusCode as number;
 
     let message = `${res.statusCode} ${res.statusMessage} on ${req.method} ${req.path}`;
     const errors = this.flattenErrors(response);
