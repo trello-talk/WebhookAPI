@@ -366,7 +366,7 @@ export default class WebhookData {
       compact: {
         color: 3092790,
         author: {
-          icon_url: process.env.ICON_URL,
+          icon_url: process.env.TRELLO_ICON_URL,
           name: 'Trello: ' + cutoffText(this.model.name, 248),
           url: this.model.url
         },
