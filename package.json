@@ -21,7 +21,7 @@
     "cat-loggr": "^1.2.2",
     "cron": "^1.8.2",
     "dotenv": "^10.0.0",
-    "fastify": "^3.19.1",
+    "fastify": "^3.19.2",
     "fastify-helmet": "^5.0.3",
     "influx": "^5.9.2",
     "ioredis": "^4.27.6",
