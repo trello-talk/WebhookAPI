@@ -23,13 +23,7 @@ export async function start(): Promise<void> {
   cacheCron.start();
   influxCron.start();
   actionalConnect();
-  await Promise.all([
-    loadLocales(),
-    loadEvents(),
-    pgConnect(),
-    redisConnect(),
-    server.register(helmet)
-  ]);
+  await Promise.all([loadLocales(), loadEvents(), pgConnect(), redisConnect(), server.register(helmet)]);
 
   server.addHook('onRequest', async (req, reply) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
