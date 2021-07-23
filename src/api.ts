@@ -1,6 +1,5 @@
 import fastify, { FastifyInstance } from 'fastify';
 import helmet from 'fastify-helmet';
-import middie from 'middie';
 import { logger } from './logger';
 import { route, headRoute } from './endpoint';
 
@@ -29,7 +28,6 @@ export async function start(): Promise<void> {
     loadEvents(),
     pgConnect(),
     redisConnect(),
-    server.register(middie),
     server.register(helmet)
   ]);
 
