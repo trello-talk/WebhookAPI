@@ -4,7 +4,7 @@ import { Webhook } from './db/postgres';
 export const airbrake = new Notifier({
   projectId: parseInt(process.env.AIRBRAKE_PROJECT_ID, 10),
   projectKey: process.env.AIRBRAKE_PROJECT_KEY,
-  environment: 'webhook-' + (process.env.AIRBRAKE_ENV || process.env.NODE_ENV),
+  environment: process.env.AIRBRAKE_ENV || 'webhook-' + process.env.NODE_ENV,
   keysBlocklist: [process.env.TRELLO_SECRET, process.env.PG_PASSWORD, process.env.TRELLO_KEY]
 });
 
