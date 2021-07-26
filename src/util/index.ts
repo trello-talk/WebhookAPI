@@ -1,4 +1,4 @@
-import fs from 'fs/promises';
+import { promises as fs } from 'fs';
 import path from 'path';
 
 export const IMAGE_ATTACHMENT_HOST = 'https://trello-attachments.s3.amazonaws.com/';
