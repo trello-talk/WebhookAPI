@@ -448,7 +448,10 @@ export default class WebhookData {
             { where: { id: this.webhook.id } }
           );
         } else if (e.code === 50027) {
-          logger.warn(`Discord webhook token invalid, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`, e);
+          logger.warn(
+            `Discord webhook token invalid, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`,
+            e
+          );
           await Webhook.update(
             {
               webhookID: null,
@@ -457,12 +460,16 @@ export default class WebhookData {
             { where: { id: this.webhook.id } }
           );
         } else if (e.status === 400) {
-          logger.error(`Invalid form body, dropping @ ${this.webhook.webhookID}:${this.webhook.id} - ${this.filterFlag}`, e);
+          logger.error(
+            `Invalid form body, dropping @ ${this.webhook.webhookID}:${this.webhook.id} - ${this.filterFlag}`,
+            e
+          );
         } else {
           attempt++;
           if (attempt > 3) {
             logger.error(
-              `Discord Error ${e.code} (${e.status}), exceeded attempts, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`, e
+              `Discord Error ${e.code} (${e.status}), exceeded attempts, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`,
+              e
             );
           } else {
             logger.warn(

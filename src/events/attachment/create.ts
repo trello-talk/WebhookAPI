@@ -13,7 +13,10 @@ export const event: EventFunction = {
           attachment: cutoffText(data.attachment.name, 50)
         }),
         description: data.embedDescription(['attachment', 'card', 'list']),
-        image: data.attachment.url && data.attachment.url.startsWith(IMAGE_ATTACHMENT_HOST) ? { url: data.attachment.url } : null
+        image:
+          data.attachment.url && data.attachment.url.startsWith(IMAGE_ATTACHMENT_HOST)
+            ? { url: data.attachment.url }
+            : null
       },
       small: {
         description: _('webhooks.attach_card', {
@@ -21,7 +24,10 @@ export const event: EventFunction = {
           card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${data.card.shortLink})`,
           attachment: cutoffText(data.attachment.name, 25)
         }),
-        thumbnail: data.attachment.url && data.attachment.url.startsWith(IMAGE_ATTACHMENT_HOST) ? { url: data.attachment.url } : null
+        thumbnail:
+          data.attachment.url && data.attachment.url.startsWith(IMAGE_ATTACHMENT_HOST)
+            ? { url: data.attachment.url }
+            : null
       }
     });
   }
