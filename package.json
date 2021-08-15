@@ -1,6 +1,6 @@
 {
-  "name": "tacobot-api",
-  "version": "1.0.0",
+  "name": "webhook-api",
+  "version": "1.0.1",
   "description": "Webhook API for recieving Trello requests",
   "main": "index.js",
   "repository": "https://github.com/trello-talk/WebhookAPI",
