@@ -123,7 +123,7 @@ export const route: RouteOptions = {
 
       reply.status(200).send('Recieved');
     } catch (e) {
-      await notifyWebserverError(e, ip, id, body.model.id);
+      await notifyWebserverError(e, ip, id, body);
       logger.error(e);
       reply.status(500).send('Internal error');
     }

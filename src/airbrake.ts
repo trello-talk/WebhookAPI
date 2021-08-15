@@ -1,5 +1,6 @@
 import { Notifier } from '@airbrake/node';
 import { Webhook } from './db/postgres';
+import { TrelloPayload } from './util/types';
 
 export const airbrake = new Notifier({
   projectId: parseInt(process.env.AIRBRAKE_PROJECT_ID, 10),
@@ -25,12 +26,12 @@ export function notifyWebhookError(err: Error, webhook: Webhook, filterFlag: str
     });
 }
 
-export function notifyWebserverError(err: Error, ip: string, memberID: string, modelID: string) {
+export function notifyWebserverError(err: Error, ip: string, memberID: string, body: TrelloPayload<any>) {
   if (process.env.AIRBRAKE_PROJECT_ID && process.env.AIRBRAKE_PROJECT_KEY)
     return airbrake.notify({
       error: err,
       params: {
-        webserver: { ip, memberID, modelID }
+        webserver: { ip, memberID, modelID: body.model.id, action: JSON.stringify(body.action) }
       }
     });
 }
