@@ -462,7 +462,7 @@ export default class WebhookData {
           attempt++;
           if (attempt > 3) {
             logger.error(
-              `Discord Error ${e.code} (${e.status}), exceeded attempts, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`
+              `Discord Error ${e.code} (${e.status}), exceeded attempts, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`, e
             );
           } else {
             logger.warn(
@@ -470,6 +470,18 @@ export default class WebhookData {
             );
             return this._send(embeds, attempt);
           }
+        }
+      } else if (e.name === 'DiscordHTTPError' && e.code >= 500) {
+        attempt++;
+        if (attempt < 3) {
+          logger.error(
+            `Discord server error, exceeded attempts, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`
+          );
+        } else {
+          logger.warn(
+            `Discord server error, retrying (${attempt}) @ ${this.webhook.webhookID}:${this.webhook.id}`
+          );
+          return this._send(embeds, attempt);
         }
       } else if (e.message.startsWith('Request timed out (>15000ms)')) {
         attempt++;
