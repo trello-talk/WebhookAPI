@@ -457,7 +457,7 @@ export default class WebhookData {
             { where: { id: this.webhook.id } }
           );
         } else if (e.status === 400) {
-          logger.error(`Invalid form body, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`, e);
+          logger.error(`Invalid form body, dropping @ ${this.webhook.webhookID}:${this.webhook.id} - ${this.filterFlag}`, e);
         } else {
           attempt++;
           if (attempt > 3) {
