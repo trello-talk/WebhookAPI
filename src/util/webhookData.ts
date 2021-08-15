@@ -447,6 +447,15 @@ export default class WebhookData {
             },
             { where: { id: this.webhook.id } }
           );
+        } else if (e.code === 50027) {
+          logger.warn(`Discord webhook token invalid, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`, e);
+          await Webhook.update(
+            {
+              webhookID: null,
+              webhookToken: null
+            },
+            { where: { id: this.webhook.id } }
+          );
         } else if (e.status === 400) {
           logger.error(`Invalid form body, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`, e);
         } else {
