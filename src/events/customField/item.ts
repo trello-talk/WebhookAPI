@@ -12,8 +12,8 @@ export const event: EventFunction = {
       },
       small: {}
     };
-    const added = !data.customFieldItem.value;
-    const removed = !data.oldData.value;
+    const added = !data.oldData.value;
+    const removed = !data.customFieldItem.value;
     switch (data.customField.type) {
       case 'checkbox':
         resultData.default.title = _(`webhooks.customfielditem_checkbox_${removed}`, {
