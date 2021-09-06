@@ -36,7 +36,7 @@
     "@types/axios": "^0.14.0",
     "@types/connect": "^3.4.35",
     "@types/cron": "^1.7.3",
-    "@types/ioredis": "^4.27.1",
+    "@types/ioredis": "^4.27.2",
     "@types/lodash": "^4.14.172",
     "@types/mustache": "^4.1.2",
     "@types/node": "^16.7.10",
