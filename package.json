@@ -1,10 +1,11 @@
 {
   "name": "webhook-api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Webhook API for recieving Trello requests",
   "main": "index.js",
   "repository": "https://github.com/trello-talk/WebhookAPI",
   "author": "Snazzah",
+  "private": true,
   "license": "MIT",
   "scripts": {
     "start": "cd dist && node index.js",
