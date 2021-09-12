@@ -12,16 +12,16 @@ export const event: EventFunction = {
       },
       small: {}
     };
-    const added = !data.oldData.value;
-    const removed = !data.customFieldItem.value;
+    const added = data.oldData.value === null;
+    const removed = data.customFieldItem.value === null;
     switch (data.customField.type) {
       case 'checkbox':
-        resultData.default.title = _(`webhooks.customfielditem_checkbox_${removed}`, {
+        resultData.default.title = _(`webhooks.customfielditem_checkbox_${added}`, {
           member: data.invoker.webhookSafeName,
           card: cutoffText(data.card.name, 50),
           customField: cutoffText(data.customField.name, 50)
         });
-        resultData.small.description = _(`webhooks.customfielditem_checkbox_${removed}`, {
+        resultData.small.description = _(`webhooks.customfielditem_checkbox_${added}`, {
           member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username})`,
           card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${data.card.shortLink})`,
           customField: cutoffText(data.customField.name, 25)
@@ -38,13 +38,13 @@ export const event: EventFunction = {
           card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${data.card.shortLink})`,
           customField: cutoffText(data.customField.name, 25)
         });
-        if (!removed)
+        if (!added)
           resultData.default.fields.push({
             name: '*' + _('trello.old_v') + '*',
             value: data.oldData.value.text,
             inline: true
           });
-        if (!added)
+        if (!removed)
           resultData.default.fields.push({
             name: '*' + _('trello.new_v') + '*',
             value: data.customFieldItem.value.text,
@@ -62,13 +62,13 @@ export const event: EventFunction = {
           card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${data.card.shortLink})`,
           customField: cutoffText(data.customField.name, 25)
         });
-        if (!removed)
+        if (!added)
           resultData.default.fields.push({
             name: '*' + _('trello.old_v') + '*',
             value: _.toLocaleString(parseFloat(data.oldData.value.number)),
             inline: true
           });
-        if (!added)
+        if (!removed)
           resultData.default.fields.push({
             name: '*' + _('trello.new_v') + '*',
             value: _.toLocaleString(parseFloat(data.customFieldItem.value.number)),
@@ -86,13 +86,13 @@ export const event: EventFunction = {
           card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${data.card.shortLink})`,
           customField: cutoffText(data.customField.name, 25)
         });
-        if (!removed)
+        if (!added)
           resultData.default.fields.push({
             name: '*' + _('trello.old_v') + '*',
             value: _.moment(data.oldData.value.date).format('LLLL'),
             inline: true
           });
-        if (!added)
+        if (!removed)
           resultData.default.fields.push({
             name: '*' + _('trello.new_v') + '*',
             value: _.moment(data.customFieldItem.value.date).format('LLLL'),
@@ -101,7 +101,7 @@ export const event: EventFunction = {
         break;
       case 'list':
         resultData.default.title = _(
-          `webhooks.customfielditem_${data.oldData.idValue ? 'update' : 'remove'}`,
+          `webhooks.customfielditem_${data.customFieldItem.idValue ? 'update' : 'remove'}`,
           {
             member: data.invoker.webhookSafeName,
             card: cutoffText(data.card.name, 50),
@@ -109,7 +109,7 @@ export const event: EventFunction = {
           }
         );
         resultData.small.description = _(
-          `webhooks.customfielditem_${data.oldData.idValue ? 'update' : 'remove'}`,
+          `webhooks.customfielditem_${data.customFieldItem.idValue ? 'update' : 'remove'}`,
           {
             member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username})`,
             card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${data.card.shortLink})`,
