@@ -1,5 +1,5 @@
 import { EventFunction } from '../../../util/events';
-import { cutoffText } from '../../../util';
+import { cutoffText, formatTime } from '../../../util';
 
 export const event: EventFunction = {
   name: 'UPDATE_CARD_DUE',
@@ -12,8 +12,6 @@ export const event: EventFunction = {
         : !data.card.due
         ? 'webhooks.due_remove'
         : 'webhooks.due_change';
-      const oldDue = _.moment(data.oldData.due);
-      const newDue = _.moment(data.card.due);
       return data.send({
         default: {
           title: _(title, {
@@ -25,14 +23,14 @@ export const event: EventFunction = {
             data.oldData.due
               ? {
                   name: '*' + _('trello.old_due') + '*',
-                  value: `${oldDue.format('LLLL')} *(${oldDue.fromNow()})*`,
+                  value: formatTime(data.oldData.due),
                   inline: true
                 }
               : null,
             data.card.due
               ? {
                   name: '*' + _('trello.new_due') + '*',
-                  value: `${newDue.format('LLLL')} *(${newDue.fromNow()})*`,
+                  value: formatTime(data.card.due),
                   inline: true
                 }
               : null
@@ -47,14 +45,14 @@ export const event: EventFunction = {
             data.oldData.due
               ? {
                   name: '*' + _('trello.old_due') + '*',
-                  value: `${oldDue.format('LLLL')} *(${oldDue.fromNow()})*`,
+                  value: formatTime(data.oldData.due),
                   inline: true
                 }
               : null,
             data.card.due
               ? {
                   name: '*' + _('trello.new_due') + '*',
-                  value: `${newDue.format('LLLL')} *(${newDue.fromNow()})*`,
+                  value: formatTime(data.card.due),
                   inline: true
                 }
               : null

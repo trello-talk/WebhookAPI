@@ -1,5 +1,5 @@
 import { EventFunction } from '../../util/events';
-import { cutoffText } from '../../util';
+import { cutoffText, formatTime } from '../../util';
 
 export const event: EventFunction = {
   name: 'UPDATE_CUSTOM_FIELD_ITEM',
@@ -89,13 +89,13 @@ export const event: EventFunction = {
         if (!added)
           resultData.default.fields.push({
             name: '*' + _('trello.old_v') + '*',
-            value: _.moment(data.oldData.value.date).format('LLLL'),
+            value: formatTime(data.oldData.value.date),
             inline: true
           });
         if (!removed)
           resultData.default.fields.push({
             name: '*' + _('trello.new_v') + '*',
-            value: _.moment(data.customFieldItem.value.date).format('LLLL'),
+            value: formatTime(data.customFieldItem.value.date),
             inline: true
           });
         break;

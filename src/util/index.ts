@@ -34,8 +34,13 @@ export function cutoffText(text: string, limit = 2000) {
   return text.length > limit ? text.slice(0, limit - 1) + '…' : text;
 }
 
-export function escapeRegex(s) {
+export function escapeRegex(s: string) {
   return s.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+}
+
+export function formatTime(dateString: string) {
+  const timestamp = Math.round(new Date(dateString).valueOf() / 1000);
+  return `<t:${timestamp}:F> *(<t:${timestamp}:R>)*`;
 }
 
 export function escapeMarkdown(text: string) {
