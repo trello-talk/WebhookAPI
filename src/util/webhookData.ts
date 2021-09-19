@@ -420,7 +420,7 @@ export default class WebhookData {
         onBatch: (embeds) => {
           onWebhookSend(this.webhook.webhookID);
           logger.info(
-            'Posting webhook %d (guild=%s, time=%d)',
+            'Posting webhook %s (guild=%s, time=%d)',
             this.webhook.webhookID,
             this.webhook.guildID,
             Date.now()
