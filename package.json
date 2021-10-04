@@ -16,7 +16,7 @@
     "dev": "devScript"
   },
   "dependencies": {
-    "@airbrake/node": "^2.1.5",
+    "@airbrake/node": "^2.1.7",
     "actional": "^0.1.4",
     "axios": "^0.22.0",
     "cat-loggr": "^1.2.2",
