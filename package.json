@@ -30,7 +30,7 @@
     "moment": "^2.29.1",
     "mustache": "^4.2.0",
     "pg": "^8.7.1",
-    "sequelize": "^6.7.0"
+    "sequelize": "^6.8.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
