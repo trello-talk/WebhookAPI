@@ -22,8 +22,10 @@ export const event: EventFunction = {
           customField: cutoffText(data.customField.name, 50)
         });
         resultData.small.description = _(`webhooks.customfielditem_checkbox_${added}`, {
-          member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username})`,
-          card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${data.card.shortLink})`,
+          member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username}?utm_source=tacobot.app)`,
+          card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${
+            data.card.shortLink
+          }?utm_source=tacobot.app)`,
           customField: cutoffText(data.customField.name, 25)
         });
         break;
@@ -34,8 +36,10 @@ export const event: EventFunction = {
           customField: cutoffText(data.customField.name, 50)
         });
         resultData.small.description = _(`webhooks.customfielditem_${!removed ? 'update' : 'remove'}`, {
-          member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username})`,
-          card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${data.card.shortLink})`,
+          member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username}?utm_source=tacobot.app)`,
+          card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${
+            data.card.shortLink
+          }?utm_source=tacobot.app)`,
           customField: cutoffText(data.customField.name, 25)
         });
         if (!added)

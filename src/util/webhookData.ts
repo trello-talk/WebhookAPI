@@ -250,24 +250,24 @@ export default class WebhookData {
   embedDescription(fields = null) {
     const _ = this.locale;
     const lines = {
-      invoker: `**${_('words.member.one')}:** ${
+      invoker: `**${_('words.member.one')}:** [${
         this.invoker.fullName
           ? `${cutoffText(this.invoker.fullName, 50)} (${this.invoker.username})`
           : this.invoker.username
-      }`,
+      }](https://trello.com/${this.invoker.username}?utm_source=tacobot.app)`,
       member: this.member
-        ? `**${_('words.member.one')}:** ${
+        ? `**${_('words.member.one')}:** [${
             this.member.fullName
               ? `${cutoffText(this.member.fullName, 50)} (${this.member.username})`
-              : this.action.member.username
-          }`
+              : this.member.username
+          }](https://trello.com/${this.member.username}?utm_source=tacobot.app)`
         : '',
       card:
         this.card && this.card.name
           ? `**${_('words.card.one')}:** [${cutoffText(
               escapeMarkdown(this.card.name),
               50
-            )}](https://trello.com/c/${this.card.shortLink})`
+            )}](https://trello.com/c/${this.card.shortLink}?utm_source=tacobot.app)`
           : '',
       list:
         this.list && this.list.name
@@ -330,7 +330,7 @@ export default class WebhookData {
         author: {
           icon_url: process.env.TRELLO_ICON_URL,
           name: 'Trello: ' + cutoffText(this.model.name, 248),
-          url: this.model.url
+          url: `${this.model.url}?utm_source=tacobot.app`
         },
         description: embedStyles.default.description || this.embedDescription(),
         ...(this.invoker.avatar
@@ -353,9 +353,9 @@ export default class WebhookData {
               }
             : {}),
           name: this.invoker.titleSafeName,
-          url: this.model.url
+          url: `${this.model.url}?utm_source=tacobot.app`
         },
-        url: this.model.url,
+        url: `${this.model.url}?utm_source=tacobot.app`,
         title: cutoffText(this.model.name, 256),
         timestamp: this.action.date,
         footer: {

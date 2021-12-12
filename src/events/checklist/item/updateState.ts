@@ -25,8 +25,10 @@ export const event: EventFunction = {
             ? 'webhooks.checkitem_state_on'
             : 'webhooks.checkitem_state_off',
           {
-            member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username})`,
-            card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${data.card.shortLink})`,
+            member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username}?utm_source=tacobot.app)`,
+            card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${
+              data.card.shortLink
+            }?utm_source=tacobot.app)`,
             checklistItem: cutoffText(data.checklistItem.name, 25)
           }
         )

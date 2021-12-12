@@ -16,9 +16,11 @@ export const event: EventFunction = {
       },
       small: {
         description: _('webhooks.card_remove_label', {
-          member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username})`,
+          member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username}?utm_source=tacobot.app)`,
           label: cutoffText(data.label.name, 25),
-          card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${data.card.shortLink})`
+          card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${
+            data.card.shortLink
+          }?utm_source=tacobot.app)`
         })
       }
     });

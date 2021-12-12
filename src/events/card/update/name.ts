@@ -16,8 +16,10 @@ export const event: EventFunction = {
       },
       small: {
         description: _('webhooks.rename_card', {
-          member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username})`,
-          card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${data.card.shortLink})`,
+          member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username}?utm_source=tacobot.app)`,
+          card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${
+            data.card.shortLink
+          }?utm_source=tacobot.app)`,
           oldName: cutoffText(data.oldData.name, 25)
         })
       }

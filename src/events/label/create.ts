@@ -15,7 +15,7 @@ export const event: EventFunction = {
       },
       small: {
         description: _('webhooks.create_label', {
-          member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username})`,
+          member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username}?utm_source=tacobot.app)`,
           label: cutoffText(data.label.name, 25)
         })
       }

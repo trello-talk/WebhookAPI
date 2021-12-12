@@ -38,8 +38,10 @@ export const event: EventFunction = {
         },
         small: {
           description: _(title, {
-            member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username})`,
-            card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${data.card.shortLink})`
+            member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username}?utm_source=tacobot.app)`,
+            card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${
+              data.card.shortLink
+            }?utm_source=tacobot.app)`
           }),
           fields: [
             data.oldData.due
@@ -70,8 +72,10 @@ export const event: EventFunction = {
         },
         small: {
           description: _(data.card.dueComplete ? 'webhooks.due_on' : 'webhooks.due_off', {
-            member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username})`,
-            card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${data.card.shortLink})`
+            member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username}?utm_source=tacobot.app)`,
+            card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${
+              data.card.shortLink
+            }?utm_source=tacobot.app)`
           })
         }
       });

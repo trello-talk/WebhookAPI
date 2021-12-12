@@ -26,7 +26,7 @@ export const event: EventFunction = {
         },
         small: {
           description: _(`webhooks.board_set_${prefMap[pref]}`, {
-            member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username})`,
+            member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username}?utm_source=tacobot.app)`,
             board: cutoffText(data.board.name, 50),
             oldPerm: _(`trello.${prefMap[pref]}.${data.oldData.prefs[pref]}`),
             perm: _(`trello.${prefMap[pref]}.${data.board.prefs[pref]}`)

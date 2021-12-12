@@ -16,7 +16,7 @@ export const event: EventFunction = {
       },
       small: {
         description: _('webhooks.copy_checklist', {
-          member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username})`,
+          member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username}?utm_source=tacobot.app)`,
           sourceChecklist: cutoffText(data.sourceChecklist.name, 25),
           checklist: cutoffText(data.checklist.name, 25)
         })

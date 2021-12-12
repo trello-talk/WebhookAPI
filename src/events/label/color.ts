@@ -19,7 +19,7 @@ export const event: EventFunction = {
       },
       small: {
         description: _('webhooks.label_recolor', {
-          member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username})`,
+          member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username}?utm_source=tacobot.app)`,
           label: cutoffText(data.label.name, 25),
           oldColor: data.oldData.color
             ? _(`trello.label_color.${data.oldData.color}`)

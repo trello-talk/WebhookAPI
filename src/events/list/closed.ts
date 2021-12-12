@@ -15,7 +15,7 @@ export const event: EventFunction = {
       },
       small: {
         description: _(data.list.closed ? 'webhooks.archive_list' : 'webhooks.unarchive_list', {
-          member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username})`,
+          member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username}?utm_source=tacobot.app)`,
           list: cutoffText(data.list.name, 25)
         })
       }

@@ -15,7 +15,7 @@ export const event: EventFunction = {
       },
       small: {
         description: _('webhooks_extended.delete_card', {
-          member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username})`,
+          member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username}?utm_source=tacobot.app)`,
           cardID: data.card.shortLink,
           list: cutoffText(data.list.name, 25)
         })
