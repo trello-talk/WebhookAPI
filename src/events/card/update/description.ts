@@ -20,12 +20,12 @@ export const event: EventFunction = {
         fields: [
           {
             name: '*' + _('trello.old_desc') + '*',
-            value: cutoffText(data.oldData.desc, 1024),
+            value: data.oldData.desc ? cutoffText(data.oldData.desc, 1024) : '',
             inline: true
           },
           {
             name: '*' + _('trello.new_desc') + '*',
-            value: cutoffText(data.card.desc, 1024),
+            value: data.card.desc ? cutoffText(data.card.desc, 1024) : '',
             inline: true
           }
         ].filter((v) => !!v.value)
