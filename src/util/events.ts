@@ -35,6 +35,8 @@ export function findFilter(payload: TrelloPayload<any>): [string, boolean] {
     const childAction = snakeCaseAction + '_' + (keyMap[keyChanged] || keyChanged).toUpperCase();
     if (WebhookFilters.FLAGS[childAction]) return [childAction, events.has(childAction)];
   }
+
+  return [`!${payload.action.type}`, false];
 }
 
 export const PARENT_FILTERS = [

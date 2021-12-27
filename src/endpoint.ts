@@ -1,4 +1,3 @@
-/* global BigInt */
 import { IncomingMessage, Server } from 'http';
 import { createHmac } from 'crypto';
 import { FastifyRequest, RouteOptions } from 'fastify';
