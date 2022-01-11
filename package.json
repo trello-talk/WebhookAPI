@@ -25,7 +25,7 @@
     "fastify": "^3.25.3",
     "fastify-helmet": "^6.0.0",
     "influx": "^5.9.2",
-    "ioredis": "^4.28.2",
+    "ioredis": "^4.28.3",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "mustache": "^4.2.0",
