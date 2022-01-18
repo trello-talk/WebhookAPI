@@ -21,7 +21,7 @@
     "axios": "^0.24.0",
     "cat-loggr": "^1.2.2",
     "cron": "^1.8.2",
-    "dotenv": "^14.1.0",
+    "dotenv": "^14.2.0",
     "fastify": "^3.25.3",
     "fastify-helmet": "^7.0.0",
     "influx": "^5.9.2",
