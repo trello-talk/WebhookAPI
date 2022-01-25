@@ -1,6 +1,6 @@
 {
   "name": "webhook-api",
-  "version": "1.0.2",
+  "version": "1.1.0s",
   "description": "Webhook API for recieving Trello requests",
   "main": "index.js",
   "repository": "https://github.com/trello-talk/WebhookAPI",
@@ -16,8 +16,10 @@
     "dev": "devScript"
   },
   "dependencies": {
-    "@airbrake/node": "^2.1.7",
     "@influxdata/influxdb-client": "^1.22.0",
+    "@sentry/integrations": "^6.17.1",
+    "@sentry/node": "^6.17.1",
+    "@sentry/tracing": "^6.17.1",
     "actional": "^0.1.4",
     "axios": "^0.25.0",
     "cat-loggr": "^1.2.2",
@@ -50,6 +52,7 @@
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
     "ts-devscript": "^3.0.6",
+    "tslib": "^2.3.1",
     "typescript": "^4.5.5"
   }
 }

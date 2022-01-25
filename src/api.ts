@@ -10,6 +10,7 @@ import { load as loadLocales } from './util/locale';
 import { load as loadEvents } from './util/events';
 import { cron as influxCron } from './db/influx';
 import { cron as cacheCron } from './cache';
+import { close as sentryClose } from './sentry';
 
 export let server: FastifyInstance;
 
@@ -67,6 +68,7 @@ export async function stop(): Promise<void> {
   cacheCron.stop();
   influxCron.stop();
   await server.close();
+  await sentryClose();
   await pgDisconnect();
   redisDisconnect();
   actionalDisconnect();

@@ -1,5 +1,6 @@
 import { IncomingMessage, Server } from 'http';
 import { createHmac } from 'crypto';
+import { startTransaction, captureException, configureScope, addBreadcrumb, Severity } from '@sentry/node';
 import { FastifyRequest, RouteOptions } from 'fastify';
 import { RouteGenericInterface } from 'fastify/types/route';
 import { logger } from './logger';
@@ -9,7 +10,6 @@ import { Webhook } from './db/postgres';
 import { events, findFilter } from './util/events';
 import WebhookData from './util/webhookData';
 import WebhookFilters from './util/webhookFilters';
-import { notifyWebserverError } from './airbrake';
 
 export const whitelistedIPs = process.env.WHITELISTED_IPS ? process.env.WHITELISTED_IPS.split(',') : [];
 
@@ -90,17 +90,39 @@ export const route: RouteOptions = {
     const body = request.body as TrelloPayload<TrelloDefaultAction>;
     const [filter, filterFound] = findFilter(body);
 
+    const transaction = startTransaction({
+      op: 'webhook.post',
+      name: `Webhook ${id} POST: ${filter}`
+    });
+
+    configureScope((scope) => {
+      scope.setSpan(transaction);
+      scope.setTag('request.ownerID', id);
+      scope.setTag('request.filter', filter);
+      scope.setTag('request.filterFound', filterFound);
+      scope.setTag('request.ip', ip);
+      scope.setTag('request.boardID', body.model.id);
+    });
+
     logger.log(
       `Incoming request @ ip=${ip} memberID=${id}, modelID=${body.model.id} filter=${filter}`,
       body.action.data
     );
 
-    if (!filterFound) {
-      logger.info(`Unknown filter: ${body.action.type} / ${filter}`, body.action.data);
-      return reply.status(200).send('Recieved');
-    }
-
     try {
+      addBreadcrumb({
+        category: 'filter',
+        message: `Using filter: ${body.action.type} / ${filter}`,
+        level: Severity.Info,
+        data: body.action.data
+      });
+
+      if (!filterFound) {
+        logger.info(`Unknown filter: ${body.action.type} / ${filter}`, body.action.data);
+        transaction.finish();
+        return reply.status(200).send('Recieved');
+      }
+
       const webhooks = await Webhook.findAll({
         where: {
           modelID: body.model.id,
@@ -115,16 +137,31 @@ export const route: RouteOptions = {
           const filters = new WebhookFilters(BigInt(webhook.filters));
 
           const allowed = await canBeSent(webhook, body);
+          const postEvent = allowed && filters.has(filter) && webhook.webhookID;
 
-          if (allowed && filters.has(filter) && webhook.webhookID) return events.get(filter).onEvent(data);
+          addBreadcrumb({
+            category: 'webhook',
+            message: `Webhook ${webhook.webhookID} ${
+              allowed ? (postEvent ? 'posting' : 'allowed') : 'denied'
+            }`,
+            level: Severity.Info,
+            data: {
+              ...webhook.toJSON(),
+              webhookToken: '<hidden>'
+            }
+          });
+
+          if (postEvent) return events.get(filter).onEvent(data);
         })
       );
 
       reply.status(200).send('Recieved');
     } catch (e) {
-      await notifyWebserverError(e, ip, id, body);
+      captureException(e);
       logger.error(e);
       reply.status(500).send('Internal error');
+    } finally {
+      transaction.finish();
     }
   }
 };

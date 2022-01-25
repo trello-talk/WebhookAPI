@@ -15,10 +15,10 @@ import {
 import { cardListMapCache } from '../cache';
 import { cutoffText, escapeMarkdown } from '.';
 import { logger } from '../logger';
-import { notifyWebhookError } from '../airbrake';
 import { onWebhookSend } from '../db/influx';
 import { request } from './request';
 import { available as redisAvailable, client, subClient, batchHandoffs } from '../db/redis';
+import { captureException } from '@sentry/node';
 
 export const batches = new Map<string, Batcher>();
 
@@ -503,7 +503,12 @@ export default class WebhookData {
           return this._send(embeds, attempt);
         }
       } else {
-        await notifyWebhookError(e, this.webhook, this.filterFlag);
+        captureException(e, {
+          tags: {
+            webhook: this.webhook.id,
+            discordWebhook: this.webhook.webhookID
+          }
+        });
         logger.error(`Webhook execution failed @ ${this.webhook.webhookID}:${this.webhook.id}`, e);
       }
     }
