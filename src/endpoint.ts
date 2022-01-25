@@ -92,7 +92,7 @@ export const route: RouteOptions = {
 
     const transaction = startTransaction({
       op: 'webhook.post',
-      name: `Board ${body.model.shortLink} posted: ${filter}`
+      name: `Board ${body.model.shortUrl.split('/')[4]} posted: ${filter}`
     });
 
     configureScope((scope) => {
@@ -100,7 +100,7 @@ export const route: RouteOptions = {
       scope.setTag('request.ownerID', id);
       scope.setTag('request.filter', filter);
       scope.setTag('request.filterFound', filterFound);
-      scope.setTag('request.board', body.model.shortLink);
+      scope.setTag('request.board', body.model.shortUrl.split('/')[4]);
       scope.setExtra('request.ip', ip);
     });
 

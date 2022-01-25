@@ -12,6 +12,7 @@ export interface TrelloPayload<T extends TrelloDefaultAction> {
     idOrganization: string;
     pinned: boolean;
     url: string;
+    shortUrl: string;
   };
 }
 
