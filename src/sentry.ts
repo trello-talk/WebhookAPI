@@ -11,7 +11,7 @@ Sentry.init({
     })
   ],
 
-  environment: process.env.NODE_ENV || 'development',
+  environment: process.env.SENTRY_ENV || process.env.NODE_ENV || 'development',
   release: `webhook-api@${require('../package.json').version}`,
   tracesSampleRate: 1.0
 });
