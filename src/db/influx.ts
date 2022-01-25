@@ -1,24 +1,10 @@
-import { InfluxDB, FieldType } from 'influx';
+import { InfluxDB, Point } from '@influxdata/influxdb-client';
 import { CronJob } from 'cron';
 import { logger } from '../logger';
+import { hostname } from 'os';
+import { Webhook } from './postgres';
 
-export const client = new InfluxDB({
-  database: process.env.INFLUX_DB_NAME,
-  host: process.env.INFLUX_DB_HOST,
-  port: parseInt(process.env.INFLUX_DB_PORT, 10),
-  username: process.env.INFLUX_DB_USER,
-  password: process.env.INFLUX_DB_PASSWORD,
-  schema: [
-    {
-      measurement: 'webhook_traffic',
-      fields: {
-        sent: FieldType.INTEGER,
-        sentUnique: FieldType.INTEGER
-      },
-      tags: ['bot', 'cluster']
-    }
-  ]
-});
+export const client = new InfluxDB({ url: process.env.INFLUX_URL, token: process.env.INFLUX_TOKEN });
 
 export const cron = new CronJob('*/5 * * * *', collect, null, false, 'America/New_York');
 
@@ -32,27 +18,30 @@ export function onWebhookSend(webhookID: string) {
 }
 
 async function collect(timestamp = new Date()) {
-  if (!process.env.INFLUX_DB_NAME) return;
+  if (!process.env.INFLUX_URL || !process.env.INFLUX_TOKEN) return;
+
+  const webhookCount = await Webhook.count();
+  const activeWebhookCount = await Webhook.count({ where: { active: true } });
+
+  const writeApi = client.getWriteApi(process.env.INFLUX_ORG, process.env.INFLUX_BUCKET, 's');
+  const point = new Point('webhook_traffic')
+    .tag('server', process.env.SERVER_NAME || hostname())
+    .intField('sent', webhooksSent)
+    .intField('sentUnique', activeWebhooks.length)
+    .intField('count', webhookCount)
+    .intField('countActive', activeWebhookCount)
+    .timestamp(timestamp);
+  writeApi.writePoint(point);
 
   // Send to influx
-  await client.writePoints([
-    {
-      measurement: 'webhook_traffic',
-      tags: {
-        bot: 'webhookapi',
-        cluster: process.env.CLUSTER_NAME
-      },
-      fields: {
-        sent: webhooksSent,
-        sentUnique: activeWebhooks.length
-      },
-      timestamp: timestamp || cron.lastDate()
-    }
-  ]);
+  try {
+    await writeApi.close();
+    logger.log('Sent stats to Influx.');
+  } catch (e) {
+    logger.error('Error sending stats to Influx.', e);
+  }
 
   // Flush data for next cron run
   activeWebhooks = [];
   webhooksSent = 0;
-
-  logger.log('Sent stats to Influx.');
 }
