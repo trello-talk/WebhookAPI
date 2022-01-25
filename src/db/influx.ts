@@ -3,6 +3,7 @@ import { CronJob } from 'cron';
 import { logger } from '../logger';
 import { hostname } from 'os';
 import { Webhook } from './postgres';
+import { captureException, withScope } from '@sentry/node';
 
 export const client = new InfluxDB({ url: process.env.INFLUX_URL, token: process.env.INFLUX_TOKEN });
 
@@ -30,7 +31,7 @@ async function collect(timestamp = new Date()) {
     .intField('sentUnique', activeWebhooks.length)
     .intField('count', webhookCount)
     .intField('countActive', activeWebhookCount)
-    .timestamp(timestamp);
+    .timestamp(timestamp || cron.lastDate());
   writeApi.writePoint(point);
 
   // Send to influx
@@ -38,6 +39,11 @@ async function collect(timestamp = new Date()) {
     await writeApi.close();
     logger.log('Sent stats to Influx.');
   } catch (e) {
+    withScope((scope) => {
+      scope.clear();
+      scope.setExtra('date', timestamp || cron.lastDate());
+      captureException(e);
+    });
     logger.error('Error sending stats to Influx.', e);
   }
 
