@@ -24,7 +24,7 @@
     "axios": "^0.25.0",
     "cat-loggr": "^1.2.2",
     "cron": "^1.8.2",
-    "dotenv": "^14.3.2",
+    "dotenv": "^15.0.0",
     "fastify": "^3.27.0",
     "fastify-helmet": "^7.0.1",
     "ioredis": "^4.28.3",
