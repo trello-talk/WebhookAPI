@@ -27,7 +27,7 @@
     "dotenv": "^15.0.0",
     "fastify": "^3.27.0",
     "fastify-helmet": "^7.0.1",
-    "ioredis": "^4.28.3",
+    "ioredis": "^4.28.4",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "mustache": "^4.2.0",
