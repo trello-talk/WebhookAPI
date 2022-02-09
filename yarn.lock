@@ -110,6 +110,15 @@
     "@sentry/utils" "6.17.5"
     tslib "^1.9.3"
 
+"@sentry/hub@6.17.6":
+  version "6.17.6"
+  resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-6.17.6.tgz#af387ed1c180c05839610091de21ffb895b1403c"
+  integrity sha512-Ps9nk+DoFia8jhZ1lucdRE0vDx8hqXOsKXJE8a3hK/Ndki0J9jedYqBeLqSgiFG4qRjXpNFcD6TEM6tnQrv5lw==
+  dependencies:
+    "@sentry/types" "6.17.6"
+    "@sentry/utils" "6.17.6"
+    tslib "^1.9.3"
+
 "@sentry/integrations@^6.17.6":
   version "6.17.6"
   resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-6.17.6.tgz#a0789967018926ff9a777a1287e8839019dc1190"
@@ -129,6 +138,15 @@
     "@sentry/types" "6.17.5"
     tslib "^1.9.3"
 
+"@sentry/minimal@6.17.6":
+  version "6.17.6"
+  resolved "https://registry.yarnpkg.com/@sentry/minimal/-/minimal-6.17.6.tgz#9e6c37af869133834328889925500e0e76090cef"
+  integrity sha512-PLGf8WlhtdHuY6ofwYR3nyClr/TYHHAW6i0r62OZCOXTqnFPJorZpAz3VCCP2jMJmbgVbo03wN+u/xAA/zwObA==
+  dependencies:
+    "@sentry/hub" "6.17.6"
+    "@sentry/types" "6.17.6"
+    tslib "^1.9.3"
+
 "@sentry/node@^6.17.5":
   version "6.17.5"
   resolved "https://registry.yarnpkg.com/@sentry/node/-/node-6.17.5.tgz#558e88a75162644d54fdd2beed69edd22cf06937"
@@ -144,7 +162,7 @@
     lru_map "^0.3.3"
     tslib "^1.9.3"
 
-"@sentry/tracing@6.17.5", "@sentry/tracing@^6.17.5":
+"@sentry/tracing@6.17.5":
   version "6.17.5"
   resolved "https://registry.yarnpkg.com/@sentry/tracing/-/tracing-6.17.5.tgz#3bc25279d370b9771d1f8abe3d7d7e7a0f445c9f"
   integrity sha512-SVIDFL/QbNAlv+Rhgq14TqtTBp9WGipkjQXXaD/Pbqcj3/Oil7ZHHKYesW8Z+gtKQs73oQ9a0nCgraLFcQ68PQ==
@@ -153,6 +171,17 @@
     "@sentry/minimal" "6.17.5"
     "@sentry/types" "6.17.5"
     "@sentry/utils" "6.17.5"
+    tslib "^1.9.3"
+
+"@sentry/tracing@^6.17.6":
+  version "6.17.6"
+  resolved "https://registry.yarnpkg.com/@sentry/tracing/-/tracing-6.17.6.tgz#40f6e6166e05059c7b826ced70056ba06d5722e8"
+  integrity sha512-+h5ov+zEm5WH9+vmFfdT4EIqBOW7Tggzh0BDz8QRStRc2JbvEiSZDs+HlsycBwWMQi/ucJs93FPtNnWjW+xvBw==
+  dependencies:
+    "@sentry/hub" "6.17.6"
+    "@sentry/minimal" "6.17.6"
+    "@sentry/types" "6.17.6"
+    "@sentry/utils" "6.17.6"
     tslib "^1.9.3"
 
 "@sentry/types@6.17.5":
