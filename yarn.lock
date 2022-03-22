@@ -101,15 +101,6 @@
     "@sentry/utils" "6.19.1"
     tslib "^1.9.3"
 
-"@sentry/hub@6.18.2":
-  version "6.18.2"
-  resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-6.18.2.tgz#fdb8536f61899fd48f3d1b49a6957348ad729ec5"
-  integrity sha512-d0AugekMkbnN12b4EXMjseJxtLPc9S20DGobCPUb4oAQT6S2oDQEj1jwP6PQ5vtgyy+GMYWxBMgqAQ4pjVYISQ==
-  dependencies:
-    "@sentry/types" "6.18.2"
-    "@sentry/utils" "6.18.2"
-    tslib "^1.9.3"
-
 "@sentry/hub@6.19.1":
   version "6.19.1"
   resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-6.19.1.tgz#bff9ed5885b6e0eb4280774b653fa05edec6ed07"
@@ -127,15 +118,6 @@
     "@sentry/types" "6.18.2"
     "@sentry/utils" "6.18.2"
     localforage "^1.8.1"
-    tslib "^1.9.3"
-
-"@sentry/minimal@6.18.2":
-  version "6.18.2"
-  resolved "https://registry.yarnpkg.com/@sentry/minimal/-/minimal-6.18.2.tgz#581c2fc030b9c89f1fcdc3e4855b91ce6c95db56"
-  integrity sha512-n7KYuo34W2LxE+3dnZ47of7XHuORINCnXq66XH72eoj67tf0XeWbIhEJrYGmoLRyRfoCYYrBLWiDl/uTjLzrzQ==
-  dependencies:
-    "@sentry/hub" "6.18.2"
-    "@sentry/types" "6.18.2"
     tslib "^1.9.3"
 
 "@sentry/minimal@6.19.1":
@@ -161,15 +143,15 @@
     lru_map "^0.3.3"
     tslib "^1.9.3"
 
-"@sentry/tracing@^6.18.2":
-  version "6.18.2"
-  resolved "https://registry.yarnpkg.com/@sentry/tracing/-/tracing-6.18.2.tgz#163ecf0042aeb300c12952a91784fda6630085ef"
-  integrity sha512-hg6NLqrqJ5sUPTyWEQ2RqdnhQVnyLtx8II0IyWxQLDWD8UCe3Mu6G7mroDtakPWcP+lWz6OnKfMEfuhMcxR8fw==
+"@sentry/tracing@^6.19.1":
+  version "6.19.1"
+  resolved "https://registry.yarnpkg.com/@sentry/tracing/-/tracing-6.19.1.tgz#2fc710c57bc157748539cdec3bbd5dcd41f7f2a0"
+  integrity sha512-o34+h0j70dszcIwpCIbmO4UauPurpqLvcPO3JsFhRdxQhwQaQgMwhFklbAt7al9oEDYkjlS0gzhhlOCz4IS9kA==
   dependencies:
-    "@sentry/hub" "6.18.2"
-    "@sentry/minimal" "6.18.2"
-    "@sentry/types" "6.18.2"
-    "@sentry/utils" "6.18.2"
+    "@sentry/hub" "6.19.1"
+    "@sentry/minimal" "6.19.1"
+    "@sentry/types" "6.19.1"
+    "@sentry/utils" "6.19.1"
     tslib "^1.9.3"
 
 "@sentry/types@6.18.2":
