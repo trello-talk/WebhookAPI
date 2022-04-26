@@ -19,7 +19,7 @@
     "@influxdata/influxdb-client": "^1.25.0",
     "@sentry/integrations": "^6.19.6",
     "@sentry/node": "^6.19.6",
-    "@sentry/tracing": "^6.19.6",
+    "@sentry/tracing": "^6.19.7",
     "actional": "^0.1.4",
     "axios": "^0.26.1",
     "cat-loggr": "^1.2.2",
