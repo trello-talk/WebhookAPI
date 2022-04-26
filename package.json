@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@influxdata/influxdb-client": "^1.25.0",
-    "@sentry/integrations": "^6.19.6",
+    "@sentry/integrations": "^6.19.7",
     "@sentry/node": "^6.19.6",
     "@sentry/tracing": "^6.19.7",
     "actional": "^0.1.4",
