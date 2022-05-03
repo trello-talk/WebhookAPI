@@ -5,7 +5,9 @@ import { hostname } from 'os';
 import { Webhook } from './postgres';
 import { captureException, withScope } from '@sentry/node';
 
-export const client = new InfluxDB({ url: process.env.INFLUX_URL, token: process.env.INFLUX_TOKEN });
+export const client = process.env.INFLUX_URL
+  ? new InfluxDB({ url: process.env.INFLUX_URL, token: process.env.INFLUX_TOKEN })
+  : null;
 
 export const cron = new CronJob('*/5 * * * *', collect, null, false, 'America/New_York');
 
@@ -24,7 +26,7 @@ async function collect(timestamp = new Date()) {
   const webhookCount = await Webhook.count();
   const activeWebhookCount = await Webhook.count({ where: { active: true } });
 
-  const writeApi = client.getWriteApi(process.env.INFLUX_ORG, process.env.INFLUX_BUCKET, 's');
+  const writeApi = client!.getWriteApi(process.env.INFLUX_ORG, process.env.INFLUX_BUCKET, 's');
   const point = new Point('webhook_traffic')
     .tag('server', process.env.SERVER_NAME || hostname())
     .intField('sent', webhooksSent)
