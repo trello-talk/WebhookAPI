@@ -23,7 +23,7 @@
     "actional": "^0.1.4",
     "axios": "^0.27.2",
     "cat-loggr": "^1.2.2",
-    "cron": "^1.8.3",
+    "cron": "^2.0.0",
     "dotenv": "^16.0.0",
     "fastify": "^3.29.0",
     "fastify-helmet": "^7.1.0",
