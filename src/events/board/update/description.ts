@@ -1,15 +1,11 @@
-import { EventFunction } from '../../../util/events';
 import { cutoffText } from '../../../util';
+import { EventFunction } from '../../../util/events';
 
 export const event: EventFunction = {
   name: 'UPDATE_BOARD_DESC',
   async onEvent(data) {
     const _ = data.locale;
-    const title = !data.oldData.desc
-      ? 'webhooks.add_board_desc'
-      : !data.board.desc
-      ? 'webhooks.rem_board_desc'
-      : 'webhooks.edit_board_desc';
+    const title = !data.oldData.desc ? 'webhooks.add_board_desc' : !data.board.desc ? 'webhooks.rem_board_desc' : 'webhooks.edit_board_desc';
     return data.send({
       default: {
         title: _(title, {

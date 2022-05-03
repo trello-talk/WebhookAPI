@@ -7,11 +7,7 @@ export function wait(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export async function iterateFolder(
-  folderPath: string,
-  callback: (filePath: string) => void | Promise<void>,
-  extension: string = '.js'
-) {
+export async function iterateFolder(folderPath: string, callback: (filePath: string) => void | Promise<void>, extension = '.js') {
   const files = await fs.readdir(folderPath);
   await Promise.all(
     files.map(async (file) => {

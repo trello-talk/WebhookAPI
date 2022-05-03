@@ -19,17 +19,7 @@ export interface TrelloPayload<T extends TrelloDefaultAction> {
 type TrelloPermissionLevel = 'public' | 'private' | 'org' | 'observers';
 type TrelloBackgroundBrightness = 'dark' | 'light';
 type TrelloBackgroundSize = 'normal' | 'full';
-type TrelloColor =
-  | 'green'
-  | 'yellow'
-  | 'red'
-  | 'orange'
-  | 'lime'
-  | 'purple'
-  | 'blue'
-  | 'sky'
-  | 'pink'
-  | 'black';
+type TrelloColor = 'green' | 'yellow' | 'red' | 'orange' | 'lime' | 'purple' | 'blue' | 'sky' | 'pink' | 'black';
 
 export interface TrelloScaledImage {
   width: number;
@@ -151,4 +141,4 @@ export interface TrelloCard {
   };
 }
 
-export interface TrelloCardSource extends Pick<TrelloCard, 'id' | 'name' | 'idShort' | 'shortLink'> {}
+export type TrelloCardSource = Pick<TrelloCard, 'id' | 'name' | 'idShort' | 'shortLink'>;

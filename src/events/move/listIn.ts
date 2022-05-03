@@ -1,5 +1,5 @@
-import { EventFunction } from '../../util/events';
 import { cutoffText } from '../../util';
+import { EventFunction } from '../../util/events';
 
 export const event: EventFunction = {
   name: 'MOVE_LIST_TO_BOARD',
@@ -11,8 +11,7 @@ export const event: EventFunction = {
           member: data.invoker.webhookSafeName,
           list: cutoffText(data.list.name, 50)
         }),
-        description:
-          data.embedDescription(['list']) + `\n**${_('trello.from_board')}:** \`${data.sourceBoard.id}\``
+        description: data.embedDescription(['list']) + `\n**${_('trello.from_board')}:** \`${data.sourceBoard.id}\``
       },
       small: {
         description: _('webhooks.move_in_list', {

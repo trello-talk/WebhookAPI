@@ -1,16 +1,16 @@
 import fastify, { FastifyInstance } from 'fastify';
 import helmet from 'fastify-helmet';
-import { logger } from './logger';
-import { route, headRoute } from './endpoint';
 
-import { connect as pgConnect, disconnect as pgDisconnect } from './db/postgres';
-import { connect as actionalConnect, disconnect as actionalDisconnect } from './db/actional';
-import { connect as redisConnect, disconnect as redisDisconnect } from './db/redis';
-import { load as loadLocales } from './util/locale';
-import { load as loadEvents } from './util/events';
-import { cron as influxCron } from './db/influx';
 import { cron as cacheCron } from './cache';
+import { connect as actionalConnect, disconnect as actionalDisconnect } from './db/actional';
+import { cron as influxCron } from './db/influx';
+import { connect as pgConnect, disconnect as pgDisconnect } from './db/postgres';
+import { connect as redisConnect, disconnect as redisDisconnect } from './db/redis';
+import { headRoute, route } from './endpoint';
+import { logger } from './logger';
 import { close as sentryClose } from './sentry';
+import { load as loadEvents } from './util/events';
+import { load as loadLocales } from './util/locale';
 
 export let server: FastifyInstance;
 

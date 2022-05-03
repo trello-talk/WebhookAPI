@@ -1,16 +1,11 @@
-import Sequelize, { Sequelize as newSequelize, Model } from 'sequelize';
+import Sequelize, { Model, Sequelize as newSequelize } from 'sequelize';
 
-export const client = new newSequelize(
-  process.env.PG_DATABASE,
-  process.env.PG_USER,
-  process.env.PG_PASSWORD,
-  {
-    host: process.env.PG_HOST,
-    dialect: 'postgres',
-    logging: false,
-    define: { timestamps: true }
-  }
-);
+export const client = new newSequelize(process.env.PG_DATABASE, process.env.PG_USER, process.env.PG_PASSWORD, {
+  host: process.env.PG_HOST,
+  dialect: 'postgres',
+  logging: false,
+  define: { timestamps: true }
+});
 
 interface WebhookAttributes {
   id: number;

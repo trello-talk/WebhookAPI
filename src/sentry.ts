@@ -1,6 +1,7 @@
-import * as Sentry from '@sentry/node';
 import '@sentry/tracing';
+
 import { RewriteFrames } from '@sentry/integrations';
+import * as Sentry from '@sentry/node';
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
@@ -12,6 +13,7 @@ Sentry.init({
   ],
 
   environment: process.env.SENTRY_ENV || process.env.NODE_ENV || 'development',
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   release: `webhook-api@${require('../package.json').version}`,
   tracesSampleRate: process.env.SENTRY_SAMPLE_RATE ? parseFloat(process.env.SENTRY_SAMPLE_RATE) : 1.0
 });

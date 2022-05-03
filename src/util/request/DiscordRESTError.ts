@@ -59,13 +59,9 @@ class DiscordRESTError extends Error {
         continue;
       }
       if (errors[fieldName]._errors) {
-        messages = messages.concat(
-          errors[fieldName]._errors.map((obj: any) => `${keyPrefix + fieldName}: ${obj.message}`)
-        );
+        messages = messages.concat(errors[fieldName]._errors.map((obj: any) => `${keyPrefix + fieldName}: ${obj.message}`));
       } else if (Array.isArray(errors[fieldName])) {
-        messages = messages.concat(
-          errors[fieldName].map((str: string) => `${keyPrefix + fieldName}: ${str}`)
-        );
+        messages = messages.concat(errors[fieldName].map((str: string) => `${keyPrefix + fieldName}: ${str}`));
       } else if (typeof errors[fieldName] === 'object') {
         messages = messages.concat(this.flattenErrors(errors[fieldName], keyPrefix + fieldName + '.'));
       }

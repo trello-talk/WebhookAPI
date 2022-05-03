@@ -1,14 +1,14 @@
 import HTTPS from 'https';
-import SequentialBucket from './sequentialBucket';
 import Zlib from 'zlib';
+
+import { logger } from '../../logger';
 import DiscordHTTPError from './DiscordHTTPError';
 import DiscordRESTError from './DiscordRESTError';
 import MultipartData from './multipartData';
-import { logger } from '../../logger';
+import SequentialBucket from './sequentialBucket';
 
-export const USER_AGENT = `DiscordBot (https://github.com/trello-talk/WebhookAPI, ${
-  require('../../../package.json').version
-})`;
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+export const USER_AGENT = `DiscordBot (https://github.com/trello-talk/WebhookAPI, ${require('../../../package.json').version})`;
 
 export const API_VERSION = 8;
 export const API_BASE_URL = `/api/v${API_VERSION}`;
@@ -46,7 +46,7 @@ export function request(method: string, url: string, body?: any, file?: any, sho
   return new Promise((resolve, reject) => {
     let attempts = 0;
 
-    const actualCall = (cb: Function) => {
+    const actualCall = (cb: () => void) => {
       const headers: { [key: string]: string } = {
         'User-Agent': USER_AGENT,
         'Accept-Encoding': 'gzip,deflate',
@@ -115,22 +115,15 @@ export function request(method: string, url: string, body?: any, file?: any, sho
       req.once('response', (resp) => {
         latency = Date.now() - latency;
         latencyRef.raw.push(latency);
-        latencyRef.latency =
-          latencyRef.latency - ~~((latencyRef.raw.shift() as number) / 10) + ~~(latency / 10);
+        latencyRef.latency = latencyRef.latency - ~~((latencyRef.raw.shift() as number) / 10) + ~~(latency / 10);
 
         const headerNow = Date.parse(resp.headers['date'] as string);
         if (latencyRef.lastTimeOffsetCheck < Date.now() - 5000) {
           const timeOffset = headerNow + 500 - (latencyRef.lastTimeOffsetCheck = Date.now());
-          if (
-            latencyRef.timeOffset - latencyRef.latency >= latencyThreshold &&
-            timeOffset - latencyRef.latency >= latencyThreshold
-          ) {
-            logger.warn(
-              `Your clock is ${latencyRef.timeOffset}ms behind Discord's server clock. Please check your connection and system time.`
-            );
+          if (latencyRef.timeOffset - latencyRef.latency >= latencyThreshold && timeOffset - latencyRef.latency >= latencyThreshold) {
+            logger.warn(`Your clock is ${latencyRef.timeOffset}ms behind Discord's server clock. Please check your connection and system time.`);
           }
-          latencyRef.timeOffset =
-            latencyRef.timeOffset - ~~((latencyRef.timeOffsets.shift() as number) / 10) + ~~(timeOffset / 10);
+          latencyRef.timeOffset = latencyRef.timeOffset - ~~((latencyRef.timeOffsets.shift() as number) / 10) + ~~(timeOffset / 10);
           latencyRef.timeOffsets.push(timeOffset);
         }
 
@@ -165,13 +158,11 @@ export function request(method: string, url: string, body?: any, file?: any, sho
           .once('end', async () => {
             const now = Date.now();
 
-            if (resp.headers['x-ratelimit-limit'])
-              ratelimits[route].limit = +resp.headers['x-ratelimit-limit'];
+            if (resp.headers['x-ratelimit-limit']) ratelimits[route].limit = +resp.headers['x-ratelimit-limit'];
 
             if (
               method !== 'GET' &&
-              (resp.headers['x-ratelimit-remaining'] == undefined ||
-                resp.headers['x-ratelimit-limit'] == undefined) &&
+              (resp.headers['x-ratelimit-remaining'] == undefined || resp.headers['x-ratelimit-limit'] == undefined) &&
               ratelimits[route].limit !== 1
             ) {
               logger.debug(
@@ -194,19 +185,13 @@ export function request(method: string, url: string, body?: any, file?: any, sho
             }
 
             await ratelimits[route].setValues({
-              remaining:
-                resp.headers['x-ratelimit-remaining'] === undefined
-                  ? 1
-                  : +resp.headers['x-ratelimit-remaining'] || 0
+              remaining: resp.headers['x-ratelimit-remaining'] === undefined ? 1 : +resp.headers['x-ratelimit-remaining'] || 0
             });
 
             let retryAfter = parseInt(resp.headers['retry-after'] as string);
             // Discord breaks RFC here, using milliseconds instead of seconds (╯°□°）╯︵ ┻━┻
             // This is the unofficial Discord dev-recommended way of detecting that
-            if (
-              retryAfter &&
-              (typeof resp.headers['via'] !== 'string' || !resp.headers['via'].includes('1.1 google'))
-            ) {
+            if (retryAfter && (typeof resp.headers['via'] !== 'string' || !resp.headers['via'].includes('1.1 google'))) {
               retryAfter *= 1000;
               if (retryAfter >= 1000 * 1000) {
                 logger.warn(
@@ -223,10 +208,7 @@ export function request(method: string, url: string, body?: any, file?: any, sho
                   reset: (retryAfter || 1) + now
                 });
             } else if (resp.headers['x-ratelimit-reset']) {
-              if (
-                ~route.lastIndexOf('/reactions/:id') &&
-                +resp.headers['x-ratelimit-reset'] * 1000 - headerNow === 1000
-              )
+              if (~route.lastIndexOf('/reactions/:id') && +resp.headers['x-ratelimit-reset'] * 1000 - headerNow === 1000)
                 await ratelimits[route].setValues({
                   reset: now + 250
                 });
@@ -241,22 +223,18 @@ export function request(method: string, url: string, body?: any, file?: any, sho
 
             if (resp.statusCode !== 429) {
               logger.debug(
-                `${now} ${route} ${resp.statusCode}: ${latency}ms (${latencyRef.latency}ms avg) | ${
-                  ratelimits[route].remaining
-                }/${ratelimits[route].limit} left | Reset ${ratelimits[route].reset} (${
-                  ratelimits[route].reset - now
-                }ms left)`
+                `${now} ${route} ${resp.statusCode}: ${latency}ms (${latencyRef.latency}ms avg) | ${ratelimits[route].remaining}/${
+                  ratelimits[route].limit
+                } left | Reset ${ratelimits[route].reset} (${ratelimits[route].reset - now}ms left)`
               );
             }
 
             if ((resp.statusCode as number) >= 300) {
               if (resp.statusCode === 429) {
                 logger.debug(
-                  `${
-                    resp.headers['x-ratelimit-global'] ? 'Global' : 'Unexpected'
-                  } 429 (╯°□°）╯︵ ┻━┻: ${response}\n${body && body.content} ${now} ${route} ${
-                    resp.statusCode
-                  }: ${latency}ms (${latencyRef.latency}ms avg) | ${ratelimits[route].remaining}/${
+                  `${resp.headers['x-ratelimit-global'] ? 'Global' : 'Unexpected'} 429 (╯°□°）╯︵ ┻━┻: ${response}\n${
+                    body && body.content
+                  } ${now} ${route} ${resp.statusCode}: ${latency}ms (${latencyRef.latency}ms avg) | ${ratelimits[route].remaining}/${
                     ratelimits[route].limit
                   } left | Reset ${ratelimits[route].reset} (${ratelimits[route].reset - now}ms left)`
                 );

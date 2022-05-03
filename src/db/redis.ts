@@ -1,4 +1,5 @@
-import Redis from 'ioredis';
+import Redis, { RedisKey, RedisValue } from 'ioredis';
+
 import { logger } from '../logger';
 import Batcher from '../util/batcher';
 
@@ -46,10 +47,10 @@ export const disconnect = () => {
   }
 };
 
-export const setCache = async (key: Redis.KeyType, value: Redis.ValueType) => {
+export const setCache = async (key: RedisKey, value: RedisValue) => {
   if (available) return client.set(key, value, 'EX', 60 * 60);
 };
 
-export const getCache = async (key: Redis.KeyType) => {
+export const getCache = async (key: RedisKey) => {
   if (available) return await client.get(key);
 };

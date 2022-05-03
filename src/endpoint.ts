@@ -1,13 +1,14 @@
-import { IncomingMessage, Server } from 'http';
+import { addBreadcrumb, captureException, configureScope, Severity, startTransaction } from '@sentry/node';
 import { createHmac } from 'crypto';
-import { startTransaction, captureException, configureScope, addBreadcrumb, Severity } from '@sentry/node';
 import { FastifyRequest, RouteOptions } from 'fastify';
 import { RouteGenericInterface } from 'fastify/types/route';
-import { logger } from './logger';
-import { TrelloDefaultAction, TrelloPayload } from './util/types';
+import { IncomingMessage, Server } from 'http';
+
 import { cardListMapCache, getListID } from './cache';
 import { Webhook } from './db/postgres';
+import { logger } from './logger';
 import { events, findFilter } from './util/events';
+import { TrelloDefaultAction, TrelloPayload } from './util/types';
 import WebhookData from './util/webhookData';
 import WebhookFilters from './util/webhookFilters';
 
@@ -141,9 +142,7 @@ export const route: RouteOptions = {
 
           addBreadcrumb({
             category: 'webhook',
-            message: `Webhook ${webhook.webhookID} ${
-              allowed ? (postEvent ? 'posting' : 'allowed') : 'denied'
-            }`,
+            message: `Webhook ${webhook.webhookID} ${allowed ? (postEvent ? 'posting' : 'allowed') : 'denied'}`,
             level: Severity.Info,
             data: {
               ...webhook.toJSON(),

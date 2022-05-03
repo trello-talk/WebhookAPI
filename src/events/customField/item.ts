@@ -1,5 +1,5 @@
-import { EventFunction } from '../../util/events';
 import { cutoffText, formatTime } from '../../util';
+import { EventFunction } from '../../util/events';
 
 export const event: EventFunction = {
   name: 'UPDATE_CUSTOM_FIELD_ITEM',
@@ -23,9 +23,7 @@ export const event: EventFunction = {
         });
         resultData.small.description = _(`webhooks.customfielditem_checkbox_${added}`, {
           member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username}?utm_source=tacobot.app)`,
-          card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${
-            data.card.shortLink
-          }?utm_source=tacobot.app)`,
+          card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${data.card.shortLink}?utm_source=tacobot.app)`,
           customField: cutoffText(data.customField.name, 25)
         });
         break;
@@ -37,9 +35,7 @@ export const event: EventFunction = {
         });
         resultData.small.description = _(`webhooks.customfielditem_${!removed ? 'update' : 'remove'}`, {
           member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username}?utm_source=tacobot.app)`,
-          card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${
-            data.card.shortLink
-          }?utm_source=tacobot.app)`,
+          card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${data.card.shortLink}?utm_source=tacobot.app)`,
           customField: cutoffText(data.customField.name, 25)
         });
         if (!added)
@@ -104,22 +100,16 @@ export const event: EventFunction = {
           });
         break;
       case 'list':
-        resultData.default.title = _(
-          `webhooks.customfielditem_${data.customFieldItem.idValue ? 'update' : 'remove'}`,
-          {
-            member: data.invoker.webhookSafeName,
-            card: cutoffText(data.card.name, 50),
-            customField: cutoffText(data.customField.name, 50)
-          }
-        );
-        resultData.small.description = _(
-          `webhooks.customfielditem_${data.customFieldItem.idValue ? 'update' : 'remove'}`,
-          {
-            member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username})`,
-            card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${data.card.shortLink})`,
-            customField: cutoffText(data.customField.name, 25)
-          }
-        );
+        resultData.default.title = _(`webhooks.customfielditem_${data.customFieldItem.idValue ? 'update' : 'remove'}`, {
+          member: data.invoker.webhookSafeName,
+          card: cutoffText(data.card.name, 50),
+          customField: cutoffText(data.customField.name, 50)
+        });
+        resultData.small.description = _(`webhooks.customfielditem_${data.customFieldItem.idValue ? 'update' : 'remove'}`, {
+          member: `[${data.invoker.webhookSafeName}](https://trello.com/${data.invoker.username})`,
+          card: `[${cutoffText(data.card.name, 25)}](https://trello.com/c/${data.card.shortLink})`,
+          customField: cutoffText(data.customField.name, 25)
+        });
         break;
     }
     resultData.small.fields = resultData.default.fields;

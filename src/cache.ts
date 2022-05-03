@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { CronJob } from 'cron';
-import { logger } from './logger';
+
 import { getUser, Webhook } from './db/postgres';
 import { available as redisAvailable, getCache, setCache } from './db/redis';
+import { logger } from './logger';
 import { cleanBuckets } from './util/request';
 
 export const cardListMapCache = new Map<string, [number, string]>();
@@ -38,12 +39,7 @@ export async function getListID(cardID: string, boardID: string, webhook: Webhoo
     if (response.status !== 200) {
       // Cache as null to prevent re-requesting
       cardListMapCache.set(cardID, [Date.now(), null]);
-      logger.debug(
-        'Failed to cache list for card %s (board=%s, status=%s)',
-        cardID,
-        boardID,
-        response.status
-      );
+      logger.debug('Failed to cache list for card %s (board=%s, status=%s)', cardID, boardID, response.status);
       return null;
     } else {
       const cards = response.data as { id: string; idList: string }[];

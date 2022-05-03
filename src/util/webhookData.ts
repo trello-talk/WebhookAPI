@@ -1,24 +1,17 @@
-import { FastifyRequest } from 'fastify';
-import { Webhook } from '../db/postgres';
-import * as locale from './locale';
-import lodash from 'lodash';
-import Batcher, { BatcherOptions } from './batcher';
-import {
-  TrelloBoard,
-  TrelloCard,
-  TrelloCardSource,
-  TrelloLabel,
-  TrelloList,
-  TrelloPayload,
-  TrelloUser
-} from './types';
-import { cardListMapCache } from '../cache';
-import { cutoffText, escapeMarkdown } from '.';
-import { logger } from '../logger';
-import { onWebhookSend } from '../db/influx';
-import { request } from './request';
-import { available as redisAvailable, client, subClient, batchHandoffs } from '../db/redis';
 import { captureException } from '@sentry/node';
+import { FastifyRequest } from 'fastify';
+import lodash from 'lodash';
+
+import { cardListMapCache } from '../cache';
+import { onWebhookSend } from '../db/influx';
+import { Webhook } from '../db/postgres';
+import { available as redisAvailable, batchHandoffs, client, subClient } from '../db/redis';
+import { logger } from '../logger';
+import { cutoffText, escapeMarkdown } from '.';
+import Batcher, { BatcherOptions } from './batcher';
+import * as locale from './locale';
+import { request } from './request';
+import { TrelloBoard, TrelloCard, TrelloCardSource, TrelloLabel, TrelloList, TrelloPayload, TrelloUser } from './types';
 
 export const batches = new Map<string, Batcher>();
 
@@ -79,10 +72,7 @@ export default class WebhookData {
    * Whether the request is representing a child action
    */
   isChildAction() {
-    return (
-      this.action.type.replace(/[A-Z]/g, (letter: string) => `_${letter.toLowerCase()}`).toUpperCase() !==
-      this.filterFlag
-    );
+    return this.action.type.replace(/[A-Z]/g, (letter: string) => `_${letter.toLowerCase()}`).toUpperCase() !== this.filterFlag;
   }
 
   /**
@@ -251,53 +241,41 @@ export default class WebhookData {
     const _ = this.locale;
     const lines = {
       invoker: `**${_('words.member.one')}:** [${
-        this.invoker.fullName
-          ? `${cutoffText(this.invoker.fullName, 50)} (${this.invoker.username})`
-          : this.invoker.username
+        this.invoker.fullName ? `${cutoffText(this.invoker.fullName, 50)} (${this.invoker.username})` : this.invoker.username
       }](https://trello.com/${this.invoker.username}?utm_source=tacobot.app)`,
       member: this.member
         ? `**${_('words.member.one')}:** [${
-            this.member.fullName
-              ? `${cutoffText(this.member.fullName, 50)} (${this.member.username})`
-              : this.member.username
+            this.member.fullName ? `${cutoffText(this.member.fullName, 50)} (${this.member.username})` : this.member.username
           }](https://trello.com/${this.member.username}?utm_source=tacobot.app)`
         : '',
       card:
         this.card && this.card.name
-          ? `**${_('words.card.one')}:** [${cutoffText(
-              escapeMarkdown(this.card.name),
-              50
-            )}](https://trello.com/c/${this.card.shortLink}?utm_source=tacobot.app)`
+          ? `**${_('words.card.one')}:** [${cutoffText(escapeMarkdown(this.card.name), 50)}](https://trello.com/c/${
+              this.card.shortLink
+            }?utm_source=tacobot.app)`
           : '',
-      list:
-        this.list && this.list.name
-          ? `**${_('words.list.one')}:** ${cutoffText(escapeMarkdown(this.list.name), 50)}`
-          : '',
-      listBefore: this.listBefore
-        ? `**${_('trello.prev_list')}:** ${cutoffText(escapeMarkdown(this.listBefore.name), 50)}`
-        : '',
-      listAfter: this.listAfter
-        ? `**${_('trello.curr_list')}:** ${cutoffText(escapeMarkdown(this.listAfter.name), 50)}`
-        : '',
+      list: this.list && this.list.name ? `**${_('words.list.one')}:** ${cutoffText(escapeMarkdown(this.list.name), 50)}` : '',
+      listBefore: this.listBefore ? `**${_('trello.prev_list')}:** ${cutoffText(escapeMarkdown(this.listBefore.name), 50)}` : '',
+      listAfter: this.listAfter ? `**${_('trello.curr_list')}:** ${cutoffText(escapeMarkdown(this.listAfter.name), 50)}` : '',
       checklist:
-        this.checklist && this.checklist.name
-          ? `**${_('words.checklist.one')}:** ${cutoffText(escapeMarkdown(this.checklist.name), 50)}`
-          : '',
+        this.checklist && this.checklist.name ? `**${_('words.checklist.one')}:** ${cutoffText(escapeMarkdown(this.checklist.name), 50)}` : '',
       checklistItem:
         this.checklistItem && this.checklistItem.name
           ? `**${_('words.checklist_item.one')}:** ${cutoffText(escapeMarkdown(this.checklistItem.name), 50)}`
           : '',
       customField:
         this.customField && this.customField.type
-          ? `**${_('trello.custom_field')} (${_(
-              `custom_field_types.${this.customField.type}`
-            )}):** ${cutoffText(escapeMarkdown(this.customField.name), 50)}`
+          ? `**${_('trello.custom_field')} (${_(`custom_field_types.${this.customField.type}`)}):** ${cutoffText(
+              escapeMarkdown(this.customField.name),
+              50
+            )}`
           : '',
       label:
         this.label && this.label.name
-          ? `**${_('words.label.one')}${
-              this.label.color ? ` (${_(`trello.label_color.${this.label.color}`)})` : ''
-            }:** ${cutoffText(escapeMarkdown(this.label.name), 50)}`
+          ? `**${_('words.label.one')}${this.label.color ? ` (${_(`trello.label_color.${this.label.color}`)})` : ''}:** ${cutoffText(
+              escapeMarkdown(this.label.name),
+              50
+            )}`
           : '',
       attachment:
         this.attachment && this.attachment.name
@@ -321,8 +299,7 @@ export default class WebhookData {
    */
   async send(embedStyles: Record<string, any>) {
     // Update card-list pairing cache
-    if (this.card && (this.list || this.listAfter))
-      cardListMapCache.set(this.card.id, [Date.now(), this.list ? this.list.id : this.listAfter.id]);
+    if (this.card && (this.list || this.listAfter)) cardListMapCache.set(this.card.id, [Date.now(), this.list ? this.list.id : this.listAfter.id]);
 
     const EMBED_DEFAULTS = {
       default: {
@@ -380,55 +357,37 @@ export default class WebhookData {
 
     if (this.webhook.style === 'compact') {
       const batchKey = `compact:${this.model.id}:${this.webhook.webhookID}`;
-      const compactLine = `\`${
-        this.isChildAction() ? COMPACT_EMOJIS.CHILD : COMPACT_EMOJIS[this.filterFlag.split('_')[0]]
-      }\` ${embedStyles.small.description}`;
+      const compactLine = `\`${this.isChildAction() ? COMPACT_EMOJIS.CHILD : COMPACT_EMOJIS[this.filterFlag.split('_')[0]]}\` ${
+        embedStyles.small.description
+      }`;
 
       createTemporaryBatcher(batchKey, compactLine, {
         maxTime: 2000,
         maxSize: 10,
         onBatch: (lines) => {
-          createTemporaryBatcher(
-            this.webhook.webhookID,
-            lodash.defaultsDeep({ description: lines.join('\n') }, EMBED_DEFAULTS.compact),
-            {
-              maxTime: 1000,
-              maxSize: 10,
-              onBatch: (embeds) => {
-                onWebhookSend(this.webhook.webhookID);
-                logger.info(
-                  'Posting webhook %s (guild=%s, time=%d)',
-                  this.webhook.webhookID,
-                  this.webhook.guildID,
-                  Date.now()
-                );
-                return this._send(embeds);
-              }
+          createTemporaryBatcher(this.webhook.webhookID, lodash.defaultsDeep({ description: lines.join('\n') }, EMBED_DEFAULTS.compact), {
+            maxTime: 1000,
+            maxSize: 10,
+            onBatch: (embeds) => {
+              onWebhookSend(this.webhook.webhookID);
+              logger.info('Posting webhook %s (guild=%s, time=%d)', this.webhook.webhookID, this.webhook.guildID, Date.now());
+              return this._send(embeds);
             }
-          );
+          });
         }
       });
       return;
     }
 
-    return createTemporaryBatcher(
-      this.webhook.webhookID,
-      lodash.defaultsDeep(embedStyles[this.webhook.style], EMBED_DEFAULTS[this.webhook.style]),
-      {
-        maxTime: 1000,
-        maxSize: 10,
-        onBatch: (embeds) => {
-          onWebhookSend(this.webhook.webhookID);
-          logger.info(
-            'Posting webhook %s (guild=%s, time=%d)',
-            this.webhook.webhookID,
-            this.webhook.guildID,
-            Date.now()
-          );
-          return this._send(embeds);
-        }
+    return createTemporaryBatcher(this.webhook.webhookID, lodash.defaultsDeep(embedStyles[this.webhook.style], EMBED_DEFAULTS[this.webhook.style]), {
+      maxTime: 1000,
+      maxSize: 10,
+      onBatch: (embeds) => {
+        onWebhookSend(this.webhook.webhookID);
+        logger.info('Posting webhook %s (guild=%s, time=%d)', this.webhook.webhookID, this.webhook.guildID, Date.now());
+        return this._send(embeds);
       }
-    );
+    });
   }
 
   private async _send(embeds: any[], attempt = 1) {
@@ -448,10 +407,7 @@ export default class WebhookData {
             { where: { id: this.webhook.id } }
           );
         } else if (e.code === 50027) {
-          logger.warn(
-            `Discord webhook token invalid, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`,
-            e
-          );
+          logger.warn(`Discord webhook token invalid, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`, e);
           await Webhook.update(
             {
               webhookID: null,
@@ -460,46 +416,30 @@ export default class WebhookData {
             { where: { id: this.webhook.id } }
           );
         } else if (e.status === 400) {
-          logger.error(
-            `Invalid form body, dropping @ ${this.webhook.webhookID}:${this.webhook.id} - ${this.filterFlag}`,
-            e
-          );
+          logger.error(`Invalid form body, dropping @ ${this.webhook.webhookID}:${this.webhook.id} - ${this.filterFlag}`, e);
         } else {
           attempt++;
           if (attempt > 3) {
-            logger.error(
-              `Discord Error ${e.code} (${e.status}), exceeded attempts, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`,
-              e
-            );
+            logger.error(`Discord Error ${e.code} (${e.status}), exceeded attempts, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`, e);
           } else {
-            logger.warn(
-              `Discord Error ${e.code} (${e.status}), retrying (${attempt}) @ ${this.webhook.webhookID}:${this.webhook.id}`
-            );
+            logger.warn(`Discord Error ${e.code} (${e.status}), retrying (${attempt}) @ ${this.webhook.webhookID}:${this.webhook.id}`);
             return this._send(embeds, attempt);
           }
         }
       } else if (e.name === 'DiscordHTTPError' && e.code >= 500) {
         attempt++;
         if (attempt < 3) {
-          logger.error(
-            `Discord server error, exceeded attempts, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`
-          );
+          logger.error(`Discord server error, exceeded attempts, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`);
         } else {
-          logger.warn(
-            `Discord server error, retrying (${attempt}) @ ${this.webhook.webhookID}:${this.webhook.id}`
-          );
+          logger.warn(`Discord server error, retrying (${attempt}) @ ${this.webhook.webhookID}:${this.webhook.id}`);
           return this._send(embeds, attempt);
         }
       } else if (e.message.startsWith('Request timed out (>15000ms)')) {
         attempt++;
         if (attempt < 3) {
-          logger.error(
-            `Request timed out, exceeded attempts, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`
-          );
+          logger.error(`Request timed out, exceeded attempts, dropping @ ${this.webhook.webhookID}:${this.webhook.id}`);
         } else {
-          logger.warn(
-            `Request timed out, retrying (${attempt}) @ ${this.webhook.webhookID}:${this.webhook.id}`
-          );
+          logger.warn(`Request timed out, retrying (${attempt}) @ ${this.webhook.webhookID}:${this.webhook.id}`);
           return this._send(embeds, attempt);
         }
       } else {

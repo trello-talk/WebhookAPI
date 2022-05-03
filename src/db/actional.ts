@@ -1,4 +1,5 @@
 import { Client } from 'actional';
+
 import { stop } from '../api';
 
 export let client: Client = null;

@@ -1,5 +1,5 @@
-import { EventFunction } from '../../../util/events';
 import { cutoffText } from '../../../util';
+import { EventFunction } from '../../../util/events';
 
 export const event: EventFunction = {
   name: 'UPDATE_BOARD_NAME',

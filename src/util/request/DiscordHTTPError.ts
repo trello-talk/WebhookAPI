@@ -51,9 +51,7 @@ class DiscordHTTPError extends Error {
     for (const fieldName in errors) {
       if (!(fieldName in errors) || fieldName === 'message' || fieldName === 'code') continue;
       if (Array.isArray(errors[fieldName])) {
-        messages = messages.concat(
-          errors[fieldName].map((str: string) => `${keyPrefix + fieldName}: ${str}`)
-        );
+        messages = messages.concat(errors[fieldName].map((str: string) => `${keyPrefix + fieldName}: ${str}`));
       }
     }
     return messages;

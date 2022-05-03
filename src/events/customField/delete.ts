@@ -1,5 +1,5 @@
-import { EventFunction } from '../../util/events';
 import { cutoffText } from '../../util';
+import { EventFunction } from '../../util/events';
 
 export const event: EventFunction = {
   name: 'DELETE_CUSTOM_FIELD',

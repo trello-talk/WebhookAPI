@@ -1,9 +1,10 @@
 import path from 'path';
-import { iterateFolder } from '.';
+
 import { logger } from '../logger';
+import { iterateFolder } from '.';
+import { TrelloPayload } from './types';
 import WebhookData from './webhookData';
 import WebhookFilters from './webhookFilters';
-import { TrelloPayload } from './types';
 
 export interface EventFunction {
   name: string;
@@ -16,6 +17,7 @@ export const load = () => iterateFolder(path.resolve(__dirname, '../events'), lo
 
 export function loadEvent(filePath: string) {
   logger.debug('Loading event', filePath);
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const file = require(filePath);
   if (file.event) events.set(file.event.name, file.event);
 }
@@ -25,9 +27,7 @@ export function findFilter(payload: TrelloPayload<any>): [string, boolean] {
     idList: 'list',
     dueComplete: 'due'
   };
-  const snakeCaseAction = payload.action.type
-    .replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`)
-    .toUpperCase();
+  const snakeCaseAction = payload.action.type.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`).toUpperCase();
   if (WebhookFilters.FLAGS[snakeCaseAction]) return [snakeCaseAction, events.has(snakeCaseAction)];
 
   if (exports.PARENT_FILTERS.includes(snakeCaseAction) && payload.action.data.old) {

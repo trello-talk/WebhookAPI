@@ -20,11 +20,11 @@ export default class SequentialBucket {
   /** How many tokens the bucket can consume in the current interval. */
   limit: number;
   /** Whether the queue is being processed. */
-  processing: boolean = false;
+  processing = false;
   /** How many tokens the bucket has left in the current interval. */
   remaining: number;
   /** Timestamp of next reset. */
-  reset: number = 0;
+  reset = 0;
 
   private latencyRef: MinimalLatencyRef;
   private _queue: CallbackFunction[] = [];

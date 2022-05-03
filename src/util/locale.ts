@@ -1,7 +1,8 @@
 import lodash from 'lodash';
-import path from 'path';
-import M from 'mustache';
 import moment from 'moment';
+import M from 'mustache';
+import path from 'path';
+
 import { logger } from '../logger';
 import { iterateFolder } from '.';
 
@@ -20,6 +21,7 @@ export const load = () => iterateFolder(path.join(__dirname, '../../locale/bot')
 
 export function loadFile(filePath: string) {
   logger.log('Loading locale', filePath);
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const json = require(filePath);
   locales.set(path.parse(filePath).name, json);
 }
