@@ -16,7 +16,7 @@
     "dev": "devScript"
   },
   "dependencies": {
-    "@influxdata/influxdb-client": "^1.25.0",
+    "@influxdata/influxdb-client": "^1.26.0",
     "@sentry/integrations": "^6.19.7",
     "@sentry/node": "^6.19.7",
     "@sentry/tracing": "^6.19.7",
