@@ -129,15 +129,14 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@sentry/core@6.19.7":
-  version "6.19.7"
-  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-6.19.7.tgz#156aaa56dd7fad8c89c145be6ad7a4f7209f9785"
-  integrity sha512-tOfZ/umqB2AcHPGbIrsFLcvApdTm9ggpi/kQZFkej7kMphjT+SGBiQfYtjyg9jcRW+ilAR4JXC9BGKsdEQ+8Vw==
+"@sentry/core@7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-7.0.0.tgz#8514aad3ad81ce018e1d4a956407530a8c1286d0"
+  integrity sha512-Wl7MjmahLhuzzByYiWaYTeHKQfF6usnMp+rTTYTBbneuM4MD7TikRt6ybgnxqyqR7nI7ADH/U8OljtiqwnsOcw==
   dependencies:
-    "@sentry/hub" "6.19.7"
-    "@sentry/minimal" "6.19.7"
-    "@sentry/types" "6.19.7"
-    "@sentry/utils" "6.19.7"
+    "@sentry/hub" "7.0.0"
+    "@sentry/types" "7.0.0"
+    "@sentry/utils" "7.0.0"
     tslib "^1.9.3"
 
 "@sentry/hub@6.19.7":
@@ -147,6 +146,15 @@
   dependencies:
     "@sentry/types" "6.19.7"
     "@sentry/utils" "6.19.7"
+    tslib "^1.9.3"
+
+"@sentry/hub@7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-7.0.0.tgz#9ffcea4ae497d9e8440683bdc72eb4b30f20d24d"
+  integrity sha512-my4s+SPZiL6BKOK89YNk74QFRejlwVKKSetzz+Wr1cxDLbGXOIHS3uRJlagqOpfthhD1dq8m3WBQnabPf5JlHQ==
+  dependencies:
+    "@sentry/types" "7.0.0"
+    "@sentry/utils" "7.0.0"
     tslib "^1.9.3"
 
 "@sentry/integrations@^7.0.0":
@@ -168,15 +176,15 @@
     "@sentry/types" "6.19.7"
     tslib "^1.9.3"
 
-"@sentry/node@^6.19.7":
-  version "6.19.7"
-  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-6.19.7.tgz#32963b36b48daebbd559e6f13b1deb2415448592"
-  integrity sha512-gtmRC4dAXKODMpHXKfrkfvyBL3cI8y64vEi3fDD046uqYcrWdgoQsffuBbxMAizc6Ez1ia+f0Flue6p15Qaltg==
+"@sentry/node@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-7.0.0.tgz#771169162b5ab021ea691f329a80aaf980d5b265"
+  integrity sha512-YfmPldRH2oO3OCsu5kqnzVbeMa2Tr9Qf4t8iy7AuYKPok5ossIeZCBzjTBRw/g0wJL+I5WsxHVrt2YUuLGYBSQ==
   dependencies:
-    "@sentry/core" "6.19.7"
-    "@sentry/hub" "6.19.7"
-    "@sentry/types" "6.19.7"
-    "@sentry/utils" "6.19.7"
+    "@sentry/core" "7.0.0"
+    "@sentry/hub" "7.0.0"
+    "@sentry/types" "7.0.0"
+    "@sentry/utils" "7.0.0"
     cookie "^0.4.1"
     https-proxy-agent "^5.0.0"
     lru_map "^0.3.3"
