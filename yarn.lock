@@ -182,23 +182,10 @@
     "@sentry/utils" "7.3.1"
     tslib "^1.9.3"
 
-"@sentry/types@7.3.0":
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.3.0.tgz#eb3b9dc0bd26503eab4a5a205f0b3889b2bf7c4f"
-  integrity sha512-cGkHdh9+uvbFTj65TjWcXuhe6vQiMY+U+N2GE5xCfmZT9hwuouCASViNsbJMpZqvCg+Yi0fasQLZ71rujiRNOA==
-
 "@sentry/types@7.3.1":
   version "7.3.1"
   resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.3.1.tgz#c6eaabf0ab2cc778474ba68d3d8331ec839cda6f"
   integrity sha512-EZaRLJ8G2aSb7Vlpe1TR9LRZKY5gNpufuu8OXVrnTHiEMLHNUv1NrLQevy2m1SQUkg43oLdTyMKdM+nTESIC+A==
-
-"@sentry/utils@7.3.0":
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-7.3.0.tgz#d2970b26a75d30659dcc54ea632ba62fe9ded478"
-  integrity sha512-xUP8TBf2p/c6CN8eFQ7Y+xk0IFrJXsph5ScozqNl/2l/Xs8hd2EiYETqgUklphoYD4J2RxvPwMyqBL15QN6wNg==
-  dependencies:
-    "@sentry/types" "7.3.0"
-    tslib "^1.9.3"
 
 "@sentry/utils@7.3.1":
   version "7.3.1"
@@ -3321,10 +3308,10 @@ sequelize-pool@^7.1.0:
   resolved "https://registry.yarnpkg.com/sequelize-pool/-/sequelize-pool-7.1.0.tgz#210b391af4002762f823188fd6ecfc7413020768"
   integrity sha512-G9c0qlIWQSK29pR/5U2JF5dDQeqqHRragoyahj/Nx4KOOQ3CPPfzxnfqFPCSB7x5UgjOgnZ61nSxz+fjDpRlJg==
 
-sequelize@^6.21.1:
-  version "6.21.1"
-  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-6.21.1.tgz#91d3030c42e0a31125b501686e348bf4bd73a963"
-  integrity sha512-vbRreGOdBFLoGUrSINaNVLnaGZGSjhLq2b80tBezuqxbumMG3V2QkCnsvgggQ+LoRVYxERwWin1BL7YO4b5PSQ==
+sequelize@^6.21.2:
+  version "6.21.2"
+  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-6.21.2.tgz#28d3c9c376471670c651e0345ea42e0017b6f112"
+  integrity sha512-K0c6j/Y6yfucBL9XYHMVWqYGFShPsj6ZzMrQcOAjqzyE+a1XMBOoTXXjRvJS+fz6cKeh2D3ZqhYDRwN8nfvOMQ==
   dependencies:
     "@types/debug" "^4.1.7"
     "@types/validator" "^13.7.1"
