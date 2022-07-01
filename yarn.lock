@@ -139,15 +139,6 @@
     "@sentry/utils" "7.4.1"
     tslib "^1.9.3"
 
-"@sentry/hub@7.3.1":
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-7.3.1.tgz#9a0e0570631997b58484a97b6a1d3aa7368121ec"
-  integrity sha512-TFewt7zDvVLLrCfKkmvJEO4GPw3oPvR2t+606Z4S2gKiekGXKFGX4YC5u0ytoPfi+NMadXz4HivfrPuxrMy1JQ==
-  dependencies:
-    "@sentry/types" "7.3.1"
-    "@sentry/utils" "7.3.1"
-    tslib "^1.9.3"
-
 "@sentry/hub@7.4.1":
   version "7.4.1"
   resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-7.4.1.tgz#3fa188d85a272e26ffbf94bf38b5b8369b7692e7"
@@ -181,14 +172,14 @@
     lru_map "^0.3.3"
     tslib "^1.9.3"
 
-"@sentry/tracing@^7.3.1":
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/@sentry/tracing/-/tracing-7.3.1.tgz#bbc8493dc49553089bd1eed0bf27f1344f389e29"
-  integrity sha512-7WXIw9JiCqs3fYr2+ZwSpDQaCt64VfzjeDBo+YzPR+FmPDboo4ECHFSie4d7nZXgpVkC45iOeWE1Y1Fd0vkjgA==
+"@sentry/tracing@^7.4.1":
+  version "7.4.1"
+  resolved "https://registry.yarnpkg.com/@sentry/tracing/-/tracing-7.4.1.tgz#2fd242f01f9ef550182124adbd6d426c5505b98c"
+  integrity sha512-Te/1GwQmy+D/USOd1bXjyrstnXnArW+5ufxgHlX7LfcQlCcfVEO2PNJkxSPG5fouLZdEjlRc8Yv+wVz5iCwDaQ==
   dependencies:
-    "@sentry/hub" "7.3.1"
-    "@sentry/types" "7.3.1"
-    "@sentry/utils" "7.3.1"
+    "@sentry/hub" "7.4.1"
+    "@sentry/types" "7.4.1"
+    "@sentry/utils" "7.4.1"
     tslib "^1.9.3"
 
 "@sentry/types@7.3.1":
