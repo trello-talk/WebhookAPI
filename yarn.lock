@@ -283,10 +283,10 @@
   resolved "https://registry.yarnpkg.com/@types/ms/-/ms-0.7.31.tgz#31b7ca6407128a3d2bbc27fe2d21b345397f6197"
   integrity sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==
 
-"@types/mustache@^4.2.0":
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/@types/mustache/-/mustache-4.2.0.tgz#1cdc79f456a8abd630865859f435daf1f9504b3a"
-  integrity sha512-FXrh/N8ka/NTwiF9ed/xkStafRDtU9c0PT7VwGKfQ6Vh8OAESc4EuyfF0HIEjq2QuUTY+QOnoiq5Br1rk6G6kw==
+"@types/mustache@^4.2.1":
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/@types/mustache/-/mustache-4.2.1.tgz#724a2fca5763117dee626aa4ca3e3f6e546e7434"
+  integrity sha512-gFAlWL9Ik21nJioqjlGCnNYbf9zHi0sVbaZ/1hQEBcCEuxfLJDvz4bVJSV6v6CUaoLOz0XEIoP7mSrhJ6o237w==
 
 "@types/node@*", "@types/node@>=10.0.0", "@types/node@^18.0.6":
   version "18.0.6"
