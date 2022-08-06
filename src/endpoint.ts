@@ -1,4 +1,4 @@
-import { addBreadcrumb, captureException, configureScope, Severity, startTransaction } from '@sentry/node';
+import { addBreadcrumb, captureException, configureScope, startTransaction } from '@sentry/node';
 import { createHmac } from 'crypto';
 import { FastifyRequest, RouteOptions } from 'fastify';
 import { RouteGenericInterface } from 'fastify/types/route';
@@ -114,7 +114,7 @@ export const route: RouteOptions = {
       addBreadcrumb({
         category: 'filter',
         message: `Using filter: ${body.action.type} / ${filter}`,
-        level: Severity.Info,
+        level: 'info',
         data: body.action.data
       });
 
@@ -143,7 +143,7 @@ export const route: RouteOptions = {
           addBreadcrumb({
             category: 'webhook',
             message: `Webhook ${webhook.webhookID} ${allowed ? (postEvent ? 'posting' : 'allowed') : 'denied'}`,
-            level: Severity.Info,
+            level: 'info',
             data: {
               ...webhook.toJSON(),
               webhookToken: '<hidden>'
