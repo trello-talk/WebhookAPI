@@ -4,7 +4,11 @@
   "description": "Webhook API for recieving Trello requests",
   "main": "index.js",
   "repository": "https://github.com/trello-talk/WebhookAPI",
-  "author": "Snazzah",
+  "author": {
+    "name": "Snazzah",
+    "email": "me@snazzah.com",
+    "url": "https://snazzah.com/"
+  },
   "private": true,
   "license": "MIT",
   "scripts": {
