@@ -22,7 +22,7 @@
   "dependencies": {
     "@influxdata/influxdb-client": "^1.28.0",
     "@sentry/integrations": "^7.10.0",
-    "@sentry/node": "^7.9.0",
+    "@sentry/node": "^7.10.0",
     "@sentry/tracing": "^7.10.0",
     "actional": "^0.1.4",
     "axios": "^0.27.2",
