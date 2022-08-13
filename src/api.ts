@@ -1,5 +1,5 @@
+import helmet from '@fastify/helmet';
 import fastify, { FastifyInstance } from 'fastify';
-import helmet from 'fastify-helmet';
 
 import { cron as cacheCron } from './cache';
 import { connect as actionalConnect, disconnect as actionalDisconnect } from './db/actional';
