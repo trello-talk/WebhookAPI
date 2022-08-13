@@ -1,15 +1,14 @@
 name: ESLint
 on:
   push:
-    branches:
-      - "*"
-      - "!gh-pages"
     paths:
       - "src/**"
       - ".eslintignore"
       - ".eslintrc.*"
       - ".prettierrc"
       - ".github/workflows/lint.yml"
+      - "package.json"
+      - "yarn.lock"
   workflow_dispatch:
 
 jobs:
