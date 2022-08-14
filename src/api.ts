@@ -49,6 +49,13 @@ export async function start(): Promise<void> {
 
   server.route(headRoute);
   server.route(route);
+  server.route({
+    method: 'GET',
+    url: '/health',
+    handler: async (req, reply) => {
+      return reply.status(200).send({ ok: true });
+    }
+  });
 
   const port = parseInt(process.env.API_PORT, 10) || 3000;
   const host = process.env.API_HOST || '127.0.0.1';
