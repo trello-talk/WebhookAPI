@@ -21,7 +21,6 @@ WORKDIR /deps
 COPY package.json .
 COPY yarn.lock .
 RUN yarn install --frozen-lockfile --prod --ignore-optional
-RUN yarn generate
 
 # ---- Runner ----
 FROM node:18-alpine
