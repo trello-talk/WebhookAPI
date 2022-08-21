@@ -46,7 +46,7 @@
     "@types/connect": "3.4.35",
     "@types/cron": "2.0.0",
     "@types/ioredis": "4.28.10",
-    "@types/lodash": "4.14.183",
+    "@types/lodash": "4.14.184",
     "@types/mustache": "4.2.1",
     "@types/node": "18.7.2",
     "eslint": "8.22.0",
