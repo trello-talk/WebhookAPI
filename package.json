@@ -36,7 +36,7 @@
     "moment": "2.29.4",
     "mustache": "4.2.0",
     "pg": "8.7.3",
-    "sequelize": "6.21.3"
+    "sequelize": "6.21.4"
   },
   "peerDependencies": {
     "tslib": "2.4.0"
