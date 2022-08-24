@@ -35,7 +35,7 @@
     "lodash": "4.17.21",
     "moment": "2.29.4",
     "mustache": "4.2.0",
-    "pg": "8.7.3",
+    "pg": "8.8.0",
     "sequelize": "6.21.4"
   },
   "peerDependencies": {
