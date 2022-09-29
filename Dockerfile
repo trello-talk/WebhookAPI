@@ -8,7 +8,7 @@ WORKDIR /build
 
 COPY package.json .
 COPY yarn.lock .
-RUN yarn install --immutable
+RUN yarn install --frozen-lockfile
 
 COPY . .
 RUN yarn build

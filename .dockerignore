@@ -5,3 +5,9 @@
 node_modules
 Dockerfile
 .docker-compose.yml
+.editorconfig
+.env.example
+.env
+.mergify.yml
+.prettierrc
+dist
