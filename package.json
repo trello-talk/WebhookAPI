@@ -31,7 +31,7 @@
     "cat-loggr": "1.2.2",
     "cron": "2.1.0",
     "dotenv": "16.0.3",
-    "fastify": "4.8.1",
+    "fastify": "4.9.2",
     "ioredis": "5.2.3",
     "lodash": "4.17.21",
     "moment": "2.29.4",
