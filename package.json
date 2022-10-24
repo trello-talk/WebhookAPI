@@ -22,9 +22,9 @@
   "dependencies": {
     "@fastify/helmet": "10.0.2",
     "@influxdata/influxdb-client": "1.31.0",
-    "@sentry/integrations": "7.13.0",
-    "@sentry/node": "7.13.0",
-    "@sentry/tracing": "7.13.0",
+    "@sentry/integrations": "7.16.0",
+    "@sentry/node": "7.16.0",
+    "@sentry/tracing": "7.16.0",
     "actional": "0.1.4",
     "ajv": "8.11.0",
     "axios": "0.27.2",
