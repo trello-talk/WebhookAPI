@@ -20,7 +20,7 @@
     "dev": "devScript"
   },
   "dependencies": {
-    "@fastify/helmet": "10.0.2",
+    "@fastify/helmet": "10.1.0",
     "@influxdata/influxdb-client": "1.32.0",
     "@sentry/integrations": "7.16.0",
     "@sentry/node": "7.16.0",
