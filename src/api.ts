@@ -2,7 +2,6 @@ import helmet from '@fastify/helmet';
 import fastify, { FastifyInstance } from 'fastify';
 
 import { cron as cacheCron } from './cache';
-import { connect as actionalConnect, disconnect as actionalDisconnect } from './db/actional';
 import { cron as influxCron } from './db/influx';
 import { connect as pgConnect, disconnect as pgDisconnect } from './db/postgres';
 import { connect as redisConnect, disconnect as redisDisconnect } from './db/redis';
@@ -23,7 +22,6 @@ export async function start(): Promise<void> {
 
   cacheCron.start();
   influxCron.start();
-  actionalConnect();
   await Promise.all([loadLocales(), loadEvents(), pgConnect(), redisConnect(), server.register(helmet)]);
 
   server.addHook('onRequest', async (req, reply) => {
@@ -79,7 +77,6 @@ export async function stop(): Promise<void> {
   await sentryClose();
   await pgDisconnect();
   redisDisconnect();
-  actionalDisconnect();
   logger.info('All things disconnected.');
   process.exit(0);
 }
