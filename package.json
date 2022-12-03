@@ -30,6 +30,7 @@
     "cat-loggr": "1.2.2",
     "cron": "2.1.0",
     "dotenv": "16.0.3",
+    "eventemitter3": "^5.0.0",
     "fastify": "4.10.2",
     "ioredis": "5.2.4",
     "lodash": "4.17.21",
