@@ -37,10 +37,8 @@
     "moment": "2.29.4",
     "mustache": "4.2.0",
     "pg": "8.8.0",
+    "tslib": "2.4.1",
     "sequelize": "6.25.8"
-  },
-  "peerDependencies": {
-    "tslib": "2.4.1"
   },
   "devDependencies": {
     "@types/axios": "0.14.0",
