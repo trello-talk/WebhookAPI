@@ -11,10 +11,7 @@
     "inlineSources": true,
     "sourceRoot": "/",
     "noEmitHelpers": true,
-    "importHelpers": true,
-    "paths": {
-      "*": ["node_modules/*"]
-    }
+    "importHelpers": true
   },
   "include": ["src/**/*"]
 }
