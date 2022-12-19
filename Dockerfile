@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # ---- Builder ----
-FROM --platform=$BUILDPLATFORM node:18-alpine3.16 AS builder
+FROM --platform=$BUILDPLATFORM node:19-alpine3.16 AS builder
 
 RUN mkdir /build
 WORKDIR /build
@@ -18,7 +18,7 @@ COPY . .
 RUN pnpm run build
 
 # ---- Dependencies ----
-FROM --platform=$BUILDPLATFORM node:18-alpine3.16 AS deps
+FROM --platform=$BUILDPLATFORM node:19-alpine3.16 AS deps
 
 RUN apk add --update --no-cache dumb-init git
 RUN npm install -g pnpm@7
@@ -30,7 +30,7 @@ COPY pnpm-lock.yaml .
 RUN pnpm install --frozen-lockfile --prod --no-optional
 
 # ---- Runner ----
-FROM --platform=$BUILDPLATFORM node:18-alpine3.16
+FROM --platform=$BUILDPLATFORM node:19-alpine3.16
 
 RUN apk add --update --no-cache dumb-init git
 RUN npm install -g pnpm@7
