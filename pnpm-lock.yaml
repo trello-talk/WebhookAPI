@@ -29,7 +29,7 @@ specifiers:
   mustache: 4.2.0
   pg: 8.8.0
   rimraf: 3.0.2
-  sequelize: 6.27.0
+  sequelize: 6.28.0
   ts-devscript: 3.0.7
   tslib: 2.4.1
   typescript: 4.9.4
@@ -52,7 +52,7 @@ dependencies:
   moment: 2.29.4
   mustache: 4.2.0
   pg: 8.8.0
-  sequelize: 6.27.0_pg@8.8.0
+  sequelize: 6.28.0_pg@8.8.0
   tslib: 2.4.1
 
 devDependencies:
@@ -2886,8 +2886,8 @@ packages:
     engines: {node: '>=4'}
     dev: false
 
-  /retry-as-promised/6.1.0:
-    resolution: {integrity: sha512-Hj/jY+wFC+SB9SDlIIFWiGOHnNG0swYbGYsOj2BJ8u2HKUaobNKab0OIC0zOLYzDy0mb7A4xA5BMo4LMz5YtEA==}
+  /retry-as-promised/7.0.3:
+    resolution: {integrity: sha512-SEvMa4khHvpU/o6zgh7sK24qm6rxVgKnrSyzb5POeDvZx5N9Bf0s5sQsQ4Fl+HjRp0X+w2UzACGfUnXtx6cJ9Q==}
     dev: false
 
   /reusify/1.0.4:
@@ -2969,8 +2969,8 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: false
 
-  /sequelize/6.27.0_pg@8.8.0:
-    resolution: {integrity: sha512-Rm7BM8HQekeABup0KdtSHriu8ppJuHj2TJWCxvZtzU6j8V1LVnBk2rs38P8r4gMWgdLKs5NYoLC4il95KLsv0w==}
+  /sequelize/6.28.0_pg@8.8.0:
+    resolution: {integrity: sha512-+WHqvUQgTp19GLkt+gyQ+F6qg+FIEO2O5F9C0TOYV/PjZ2a/XwWvVkL1NCkS4VSIjVVvAUutiW6Wv9ofveGaVw==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       ibm_db: '*'
@@ -3012,7 +3012,7 @@ packages:
       moment-timezone: 0.5.40
       pg: 8.8.0
       pg-connection-string: 2.5.0
-      retry-as-promised: 6.1.0
+      retry-as-promised: 7.0.3
       semver: 7.3.8
       sequelize-pool: 7.1.0
       toposort-class: 1.0.1
