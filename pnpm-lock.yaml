@@ -28,7 +28,7 @@ specifiers:
   moment: 2.29.4
   mustache: 4.2.0
   pg: 8.8.0
-  rimraf: 3.0.2
+  rimraf: 4.1.1
   sequelize: 6.28.0
   ts-devscript: 3.0.7
   tslib: 2.4.1
@@ -66,7 +66,7 @@ devDependencies:
   eslint-config-snazzah: 1.2.1_typescript@4.9.4
   husky: 8.0.3
   lint-staged: 13.1.0
-  rimraf: 3.0.2
+  rimraf: 4.1.1
   ts-devscript: 3.0.7
   typescript: 4.9.4
 
@@ -2888,6 +2888,12 @@ packages:
     hasBin: true
     dependencies:
       glob: 7.2.3
+    dev: true
+
+  /rimraf/4.1.1:
+    resolution: {integrity: sha512-Z4Y81w8atcvaJuJuBB88VpADRH66okZAuEm+Jtaufa+s7rZmIz+Hik2G53kGaNytE7lsfXyWktTmfVz0H9xuDg==}
+    engines: {node: '>=14'}
+    hasBin: true
     dev: true
 
   /run-async/2.4.1:
