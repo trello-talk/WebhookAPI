@@ -32,7 +32,7 @@
     "dotenv": "16.0.3",
     "eventemitter3": "^5.0.0",
     "fastify": "^4.10.2",
-    "ioredis": "5.2.5",
+    "ioredis": "5.3.0",
     "lodash": "4.17.21",
     "moment": "2.29.4",
     "mustache": "4.2.0",
