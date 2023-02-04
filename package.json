@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@fastify/helmet": "10.1.0",
-    "@influxdata/influxdb-client": "1.33.0",
+    "@influxdata/influxdb-client": "1.33.1",
     "@sentry/integrations": "7.36.0",
     "@sentry/node": "7.36.0",
     "@sentry/tracing": "7.36.0",
