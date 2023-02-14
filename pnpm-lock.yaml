@@ -22,7 +22,7 @@ specifiers:
   eventemitter3: ^5.0.0
   fastify: ^4.10.2
   husky: 8.0.3
-  ioredis: 5.3.0
+  ioredis: 5.3.1
   lint-staged: 13.1.1
   lodash: 4.17.21
   moment: 2.29.4
@@ -47,7 +47,7 @@ dependencies:
   dotenv: 16.0.3
   eventemitter3: 5.0.0
   fastify: 4.12.0
-  ioredis: 5.3.0
+  ioredis: 5.3.1
   lodash: 4.17.21
   moment: 2.29.4
   mustache: 4.2.0
@@ -1962,8 +1962,8 @@ packages:
       side-channel: 1.0.4
     dev: true
 
-  /ioredis/5.3.0:
-    resolution: {integrity: sha512-Id9jKHhsILuIZpHc61QkagfVdUj2Rag5GzG1TGEvRNeM7dtTOjICgjC+tvqYxi//PuX2wjQ+Xjva2ONBuf92Pw==}
+  /ioredis/5.3.1:
+    resolution: {integrity: sha512-C+IBcMysM6v52pTLItYMeV4Hz7uriGtoJdz7SSBDX6u+zwSYGirLdQh3L7t/OItWITcw3gTFMjJReYUwS4zihg==}
     engines: {node: '>=12.22.0'}
     dependencies:
       '@ioredis/commands': 1.2.0
