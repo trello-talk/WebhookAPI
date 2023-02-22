@@ -29,7 +29,7 @@ specifiers:
   mustache: 4.2.0
   pg: 8.9.0
   rimraf: 4.1.2
-  sequelize: 6.28.0
+  sequelize: 6.28.1
   ts-devscript: 3.0.7
   tslib: 2.5.0
   typescript: 4.9.5
@@ -52,7 +52,7 @@ dependencies:
   moment: 2.29.4
   mustache: 4.2.0
   pg: 8.9.0
-  sequelize: 6.28.0_pg@8.9.0
+  sequelize: 6.28.1_pg@8.9.0
   tslib: 2.5.0
 
 devDependencies:
@@ -3017,8 +3017,8 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: false
 
-  /sequelize/6.28.0_pg@8.9.0:
-    resolution: {integrity: sha512-+WHqvUQgTp19GLkt+gyQ+F6qg+FIEO2O5F9C0TOYV/PjZ2a/XwWvVkL1NCkS4VSIjVVvAUutiW6Wv9ofveGaVw==}
+  /sequelize/6.28.1_pg@8.9.0:
+    resolution: {integrity: sha512-5595Wq9zjHrQaNMr+tYg33Cw1AcBnOySvGIfNdjoqH9PeT+v6TWem5JIkAyWkIjZMM7dDkUASteRbe4xvbpLVA==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       ibm_db: '*'
