@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@fastify/helmet': 10.1.0
-  '@influxdata/influxdb-client': 1.33.1
+  '@influxdata/influxdb-client': 1.33.2
   '@sentry/integrations': 7.38.0
   '@sentry/node': 7.38.0
   '@sentry/tracing': 7.38.0
@@ -36,7 +36,7 @@ specifiers:
 
 dependencies:
   '@fastify/helmet': 10.1.0
-  '@influxdata/influxdb-client': 1.33.1
+  '@influxdata/influxdb-client': 1.33.2
   '@sentry/integrations': 7.38.0
   '@sentry/node': 7.38.0
   '@sentry/tracing': 7.38.0
@@ -138,8 +138,8 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@influxdata/influxdb-client/1.33.1:
-    resolution: {integrity: sha512-MAKevkaXAVMGqCqEHA0bBd10wzHjF4UDk1Dhkx7rWR784VpiOFxFjMBtO7A4f3jJGSdqdMvn8Lr1U/iS8PlVNw==}
+  /@influxdata/influxdb-client/1.33.2:
+    resolution: {integrity: sha512-RT5SxH+grHAazo/YK3UTuWK/frPWRM0N7vkrCUyqVprDgQzlLP+bSK4ak2Jv3QVF/pazTnsxWjvtKZdwskV5Xw==}
     dev: false
 
   /@ioredis/commands/1.2.0:
