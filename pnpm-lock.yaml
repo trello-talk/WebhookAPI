@@ -8,14 +8,14 @@ specifiers:
   '@sentry/tracing': 7.38.0
   '@types/axios': 0.14.0
   '@types/connect': 3.4.35
-  '@types/cron': 2.0.0
+  '@types/cron': 2.0.1
   '@types/lodash': 4.14.191
   '@types/mustache': 4.2.2
   '@types/node': 18.15.3
   ajv: 8.12.0
   axios: 0.27.2
   cat-loggr: 1.2.2
-  cron: 2.2.0
+  cron: 2.3.0
   dotenv: 16.0.3
   eslint: 8.36.0
   eslint-config-snazzah: 1.2.1
@@ -43,7 +43,7 @@ dependencies:
   ajv: 8.12.0
   axios: 0.27.2
   cat-loggr: 1.2.2
-  cron: 2.2.0
+  cron: 2.3.0
   dotenv: 16.0.3
   eventemitter3: 5.0.0
   fastify: 4.12.0
@@ -58,7 +58,7 @@ dependencies:
 devDependencies:
   '@types/axios': 0.14.0
   '@types/connect': 3.4.35
-  '@types/cron': 2.0.0
+  '@types/cron': 2.0.1
   '@types/lodash': 4.14.191
   '@types/mustache': 4.2.2
   '@types/node': 18.15.3
@@ -271,8 +271,8 @@ packages:
       '@types/node': 18.15.3
     dev: true
 
-  /@types/cron/2.0.0:
-    resolution: {integrity: sha512-xZM08fqvwIXgghtPVkSPKNgC+JoMQ2OHazEvyTKnNf7aWu1aB6/4lBbQFrb03Td2cUGG7ITzMv3mFYnMu6xRaQ==}
+  /@types/cron/2.0.1:
+    resolution: {integrity: sha512-WHa/1rtNtD2Q/H0+YTTZoty+/5rcE66iAFX2IY+JuUoOACsevYyFkSYu/2vdw+G5LrmO7Lxowrqm0av4k3qWNQ==}
     dependencies:
       '@types/luxon': 3.2.0
       '@types/node': 18.15.3
@@ -957,8 +957,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /cron/2.2.0:
-    resolution: {integrity: sha512-GPiI3OgMv83XRtEUc2gUdaLvJhO3XbLN288layOBkDTupg0RK5IECNGpkykIMHg+muVR2bxt29b0xvCAcBrjYQ==}
+  /cron/2.3.0:
+    resolution: {integrity: sha512-ZN5HP8zDY41sJolMsbc+GksRATcbvkPKF5wR/qc8FrV4NBVi9ORQa1HmYa5GydaysUB80X9XpRlRkooa5uEtTA==}
     dependencies:
       luxon: 3.2.1
     dev: false
