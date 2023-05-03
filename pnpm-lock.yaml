@@ -53,8 +53,8 @@ dependencies:
     specifier: 8.10.0
     version: 8.10.0
   sequelize:
-    specifier: 6.31.0
-    version: 6.31.0(pg@8.10.0)
+    specifier: 6.31.1
+    version: 6.31.1(pg@8.10.0)
   tslib:
     specifier: 2.5.0
     version: 2.5.0
@@ -3114,8 +3114,8 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: false
 
-  /sequelize@6.31.0(pg@8.10.0):
-    resolution: {integrity: sha512-nCPVtv+QydBmb3Us2jCNAr1Dx3gST83VZxxrUQn/JAVFCOrmYOgUaPUz5bevummyNf30zfHsZhIKYAOD3ULfTA==}
+  /sequelize@6.31.1(pg@8.10.0):
+    resolution: {integrity: sha512-cahWtRrYLjqoZP/aurGBoaxn29qQCF4bxkAUPEQ/ozjJjt6mtL4Q113S3N39mQRmX5fgxRbli+bzZARP/N51eg==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       ibm_db: '*'
