@@ -2,8 +2,8 @@ lockfileVersion: '6.0'
 
 dependencies:
   '@fastify/helmet':
-    specifier: 10.1.0
-    version: 10.1.0
+    specifier: 10.1.1
+    version: 10.1.1
   '@influxdata/influxdb-client':
     specifier: 1.33.2
     version: 1.33.2
@@ -161,8 +161,8 @@ packages:
       fast-json-stringify: 5.7.0
     dev: false
 
-  /@fastify/helmet@10.1.0:
-    resolution: {integrity: sha512-v7QJPYf1uVcCwzyHzkDGcHTqDPscXj/61JKxOdvczyDPAKTxSeb9Sc2OBActXaj7zUELiAdgnkKkzNwmCNzBLQ==}
+  /@fastify/helmet@10.1.1:
+    resolution: {integrity: sha512-z9abyIlCHPU25llOTyo3uz8F8TJ+uDqtOC4+38dxODPw8Ro9sTZjbm2U7ZIF0IAv3/E0ke6vbUQ4sB376WuKJA==}
     dependencies:
       fastify-plugin: 4.5.0
       helmet: 6.0.1
