@@ -27,6 +27,7 @@ export async function iterateFolder(folderPath: string, callback: (filePath: str
 }
 
 export function isEmpty(text: string) {
+  if (!text) return false;
   if (text.length === 1 && text.charCodeAt(0) === 8203) return true;
   return text.trim().length === 0;
 }
