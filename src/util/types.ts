@@ -7,6 +7,7 @@ export interface TrelloPayload<T extends TrelloDefaultAction> {
     memberCreator: TrelloUser;
     member?: TrelloUser;
     data: T;
+    display: any;
   };
   model: Required<TrelloBoard> & {
     idOrganization: string;

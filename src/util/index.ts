@@ -26,6 +26,11 @@ export async function iterateFolder(folderPath: string, callback: (filePath: str
   );
 }
 
+export function isEmpty(text: string) {
+  if (text.length === 1 && text.charCodeAt(0) === 8203) return true;
+  return text.trim().length === 0;
+}
+
 export function cutoffText(text: string, limit = 2000) {
   return text.length > limit ? text.slice(0, limit - 1) + '…' : text;
 }

@@ -7,7 +7,7 @@ import { onWebhookSend } from '../db/influx';
 import { Webhook } from '../db/postgres';
 import { available as redisAvailable, batchHandoffs, client, subClient } from '../db/redis';
 import { logger } from '../logger';
-import { cutoffText, escapeMarkdown } from '.';
+import { cutoffText, escapeMarkdown, isEmpty } from '.';
 import Batcher, { BatcherOptions } from './batcher';
 import * as locale from './locale';
 import { request } from './request';
@@ -101,10 +101,11 @@ export default class WebhookData {
    */
   get invoker() {
     const member = this.action.memberCreator;
+    const name = this.action.display?.memberCreator?.text ?? member.fullName;
     return {
       avatar: member.avatarUrl ? member.avatarUrl + '/170.png' : null,
-      webhookSafeName: member.fullName ? cutoffText(member.fullName, 50) : member.username,
-      titleSafeName: member.fullName ? cutoffText(member.fullName, 256) : member.username,
+      webhookSafeName: isEmpty(name) ? cutoffText(name, 50) : member.username,
+      titleSafeName: isEmpty(name) ? cutoffText(name, 256) : member.username,
       ...member
     };
   }
@@ -157,10 +158,11 @@ export default class WebhookData {
    */
   get member(): ExtendedTrelloUser {
     const member = this.action.member;
+    const name = this.action.display?.member?.text ?? member.fullName;
     return member
       ? {
           avatar: member.avatarUrl ? member.avatarUrl + '/170.png' : null,
-          webhookSafeName: member.fullName ? cutoffText(member.fullName, 50) : member.username,
+          webhookSafeName: isEmpty(name) ? cutoffText(name, 50) : member.username,
           ...member
         }
       : member;
