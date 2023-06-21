@@ -158,7 +158,7 @@ export default class WebhookData {
    */
   get member(): ExtendedTrelloUser {
     const member = this.action.member;
-    const name = this.action.display?.entities?.member?.text ?? member.fullName;
+    const name = this.action.display?.entities?.member?.text ?? member?.fullName;
     return member
       ? {
           avatar: member.avatarUrl ? member.avatarUrl + '/170.png' : null,
