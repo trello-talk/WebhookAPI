@@ -104,8 +104,8 @@ export default class WebhookData {
     const name = this.action.display?.entities?.memberCreator?.text ?? member.fullName;
     return {
       avatar: member.avatarUrl ? member.avatarUrl + '/170.png' : null,
-      webhookSafeName: isEmpty(name) ? cutoffText(name, 50) : member.username,
-      titleSafeName: isEmpty(name) ? cutoffText(name, 256) : member.username,
+      webhookSafeName: !isEmpty(name) ? cutoffText(name, 50) : member.username,
+      titleSafeName: !isEmpty(name) ? cutoffText(name, 256) : member.username,
       ...member
     };
   }
@@ -162,7 +162,7 @@ export default class WebhookData {
     return member
       ? {
           avatar: member.avatarUrl ? member.avatarUrl + '/170.png' : null,
-          webhookSafeName: isEmpty(name) ? cutoffText(name, 50) : member.username,
+          webhookSafeName: !isEmpty(name) ? cutoffText(name, 50) : member.username,
           ...member
         }
       : member;
