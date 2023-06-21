@@ -33,7 +33,7 @@ RUN pnpm install --frozen-lockfile --prod --no-optional
 FROM --platform=$BUILDPLATFORM node:18-alpine3.16
 
 RUN apk add --update --no-cache dumb-init git
-RUN npm install -g pnpm@7
+RUN npm install -g pnpm@8
 
 WORKDIR /app
 
