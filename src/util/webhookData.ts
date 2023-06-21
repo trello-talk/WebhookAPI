@@ -101,7 +101,7 @@ export default class WebhookData {
    */
   get invoker() {
     const member = this.action.memberCreator;
-    const name = this.action.display?.memberCreator?.text ?? member.fullName;
+    const name = this.action.display?.entities?.memberCreator?.text ?? member.fullName;
     return {
       avatar: member.avatarUrl ? member.avatarUrl + '/170.png' : null,
       webhookSafeName: isEmpty(name) ? cutoffText(name, 50) : member.username,
@@ -158,7 +158,7 @@ export default class WebhookData {
    */
   get member(): ExtendedTrelloUser {
     const member = this.action.member;
-    const name = this.action.display?.member?.text ?? member.fullName;
+    const name = this.action.display?.entities?.member?.text ?? member.fullName;
     return member
       ? {
           avatar: member.avatarUrl ? member.avatarUrl + '/170.png' : null,
