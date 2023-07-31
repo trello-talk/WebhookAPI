@@ -30,8 +30,8 @@ dependencies:
     specifier: 1.2.2
     version: 1.2.2
   cron:
-    specifier: 2.3.1
-    version: 2.3.1
+    specifier: 2.4.0
+    version: 2.4.0
   dotenv:
     specifier: 16.3.1
     version: 16.3.1
@@ -1035,8 +1035,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /cron@2.3.1:
-    resolution: {integrity: sha512-1eRRlIT0UfIqauwbG9pkg3J6CX9A6My2ytJWqAXoK0T9oJnUZTzGBNPxao0zjodIbPgf8UQWjE62BMb9eVllSQ==}
+  /cron@2.4.0:
+    resolution: {integrity: sha512-Cx77ic1TyIAtUggr0oAhtS8MLzPBUqGNIvdDM7jE3oFIxfe8LXWI9q3iQN/H2CebAiMir53LQKWOhEKnzkJTAQ==}
     dependencies:
       luxon: 3.3.0
     dev: false
