@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@fastify/helmet':
-    specifier: 10.1.1
-    version: 10.1.1
+    specifier: 11.0.0
+    version: 11.0.0
   '@influxdata/influxdb-client':
     specifier: 1.33.2
     version: 1.33.2
@@ -170,11 +170,11 @@ packages:
       fast-json-stringify: 5.8.0
     dev: false
 
-  /@fastify/helmet@10.1.1:
-    resolution: {integrity: sha512-z9abyIlCHPU25llOTyo3uz8F8TJ+uDqtOC4+38dxODPw8Ro9sTZjbm2U7ZIF0IAv3/E0ke6vbUQ4sB376WuKJA==}
+  /@fastify/helmet@11.0.0:
+    resolution: {integrity: sha512-YSFhJFR4Pk2azmTkX54f0Z/O7h5j4ruCQUlagf/Rw1P45u5/2u+F+I83DRyIKryM6prXl++X2yY0Ib0RXAlZ7Q==}
     dependencies:
       fastify-plugin: 4.5.1
-      helmet: 6.2.0
+      helmet: 7.0.0
     dev: false
 
   /@humanwhocodes/config-array@0.11.10:
@@ -1989,9 +1989,9 @@ packages:
       function-bind: 1.1.1
     dev: true
 
-  /helmet@6.2.0:
-    resolution: {integrity: sha512-DWlwuXLLqbrIOltR6tFQXShj/+7Cyp0gLi6uAb8qMdFh/YBBFbKSgQ6nbXmScYd8emMctuthmgIa7tUfo9Rtyg==}
-    engines: {node: '>=14.0.0'}
+  /helmet@7.0.0:
+    resolution: {integrity: sha512-MsIgYmdBh460ZZ8cJC81q4XJknjG567wzEmv46WOBblDb6TUd3z8/GhgmsM9pn8g2B80tAJ4m5/d3Bi1KrSUBQ==}
+    engines: {node: '>=16.0.0'}
     dev: false
 
   /http-cache-semantics@4.1.1:
