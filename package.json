@@ -44,7 +44,7 @@
     "@types/axios": "0.14.0",
     "@types/connect": "3.4.35",
     "@types/cron": "2.0.1",
-    "@types/lodash": "4.14.196",
+    "@types/lodash": "4.14.197",
     "@types/mustache": "4.2.2",
     "@types/node": "18.17.4",
     "eslint": "8.45.0",
