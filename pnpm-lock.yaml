@@ -60,8 +60,8 @@ dependencies:
     specifier: 6.32.1
     version: 6.32.1(pg@8.11.2)
   tslib:
-    specifier: 2.5.3
-    version: 2.5.3
+    specifier: 2.6.1
+    version: 2.6.1
 
 devDependencies:
   '@types/axios':
@@ -252,7 +252,7 @@ packages:
       '@sentry/core': 7.64.0
       '@sentry/types': 7.64.0
       '@sentry/utils': 7.64.0
-      tslib: 2.5.3
+      tslib: 2.6.1
     dev: false
 
   /@sentry/core@7.64.0:
@@ -261,7 +261,7 @@ packages:
     dependencies:
       '@sentry/types': 7.64.0
       '@sentry/utils': 7.64.0
-      tslib: 2.5.3
+      tslib: 2.6.1
     dev: false
 
   /@sentry/integrations@7.64.0:
@@ -271,7 +271,7 @@ packages:
       '@sentry/types': 7.64.0
       '@sentry/utils': 7.64.0
       localforage: 1.10.0
-      tslib: 2.5.3
+      tslib: 2.6.1
     dev: false
 
   /@sentry/node@7.64.0:
@@ -285,7 +285,7 @@ packages:
       cookie: 0.4.2
       https-proxy-agent: 5.0.1
       lru_map: 0.3.3
-      tslib: 2.5.3
+      tslib: 2.6.1
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -307,7 +307,7 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       '@sentry/types': 7.64.0
-      tslib: 2.5.3
+      tslib: 2.6.1
     dev: false
 
   /@sindresorhus/is@0.14.0:
@@ -531,7 +531,7 @@ packages:
     resolution: {integrity: sha512-qEewJouhRvaecGjbkjz9kMKn96UASbDodNrE5MYy2TrXkHcisIkbMxZdGBYfAq+s1dFtCSx/5H4k5bEkfakM+A==}
     dependencies:
       js-yaml: 3.14.1
-      tslib: 2.5.3
+      tslib: 2.6.1
     dev: true
 
   /abort-controller@3.0.0:
@@ -3164,7 +3164,7 @@ packages:
   /rxjs@7.8.1:
     resolution: {integrity: sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==}
     dependencies:
-      tslib: 2.5.3
+      tslib: 2.6.1
     dev: true
 
   /safe-array-concat@1.0.0:
@@ -3563,8 +3563,8 @@ packages:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
     dev: true
 
-  /tslib@2.5.3:
-    resolution: {integrity: sha512-mSxlJJwl3BMEQCUNnxXBU9jP4JBktcEGhURcPR6VQVlnP0FdDEsIaz0C35dXNGLyRfrATNofF0F5p2KPxQgB+w==}
+  /tslib@2.6.1:
+    resolution: {integrity: sha512-t0hLfiEKfMUoqhG+U1oid7Pva4bbDPHYfJNiB7BiIjRkj1pyC++4N3huJfqY6aRH6VTB0rvtzQwjM4K6qpfOig==}
 
   /tsutils@3.21.0(typescript@5.1.6):
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
