@@ -68,8 +68,8 @@ devDependencies:
     specifier: 0.14.0
     version: 0.14.0
   '@types/connect':
-    specifier: 3.4.35
-    version: 3.4.35
+    specifier: 3.4.36
+    version: 3.4.36
   '@types/cron':
     specifier: 2.0.1
     version: 2.0.1
@@ -331,8 +331,8 @@ packages:
       - debug
     dev: true
 
-  /@types/connect@3.4.35:
-    resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
+  /@types/connect@3.4.36:
+    resolution: {integrity: sha512-P63Zd/JUGq+PdrM1lv0Wv5SBYeA2+CORvbrXbngriYY0jzLUWfQMQQxOhjONEz/wlHOAxOdY7CY65rgQdTjq2w==}
     dependencies:
       '@types/node': 20.5.9
     dev: true
