@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@fastify/helmet':
-    specifier: 11.0.0
-    version: 11.0.0
+    specifier: 11.1.1
+    version: 11.1.1
   '@influxdata/influxdb-client':
     specifier: 1.33.2
     version: 1.33.2
@@ -170,8 +170,8 @@ packages:
       fast-json-stringify: 5.8.0
     dev: false
 
-  /@fastify/helmet@11.0.0:
-    resolution: {integrity: sha512-YSFhJFR4Pk2azmTkX54f0Z/O7h5j4ruCQUlagf/Rw1P45u5/2u+F+I83DRyIKryM6prXl++X2yY0Ib0RXAlZ7Q==}
+  /@fastify/helmet@11.1.1:
+    resolution: {integrity: sha512-pjJxjk6SLEimITWadtYIXt6wBMfFC1I6OQyH/jYVCqSAn36sgAIFjeNiibHtifjCd+e25442pObis3Rjtame6A==}
     dependencies:
       fastify-plugin: 4.5.1
       helmet: 7.0.0
