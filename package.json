@@ -37,7 +37,7 @@
     "moment": "2.29.4",
     "mustache": "4.2.0",
     "pg": "8.11.3",
-    "sequelize": "6.33.0",
+    "sequelize": "6.34.0",
     "tslib": "2.6.2"
   },
   "devDependencies": {
