@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@types/axios": "0.14.0",
-    "@types/connect": "3.4.37",
+    "@types/connect": "3.4.38",
     "@types/cron": "2.0.1",
     "@types/lodash": "4.14.200",
     "@types/mustache": "4.2.4",
