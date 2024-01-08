@@ -108,10 +108,13 @@ export default class SequentialBucket {
     }
     this.last = now;
     if (this.remaining <= 0) {
-      this.processingTimeout = setTimeout(() => {
-        this.processing = false;
-        this.check(true);
-      }, Math.max(0, (this.reset || 0) - now + offset) + 1);
+      this.processingTimeout = setTimeout(
+        () => {
+          this.processing = false;
+          this.check(true);
+        },
+        Math.max(0, (this.reset || 0) - now + offset) + 1
+      );
       return;
     }
     await this.decreaseRemaining();

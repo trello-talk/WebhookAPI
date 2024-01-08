@@ -262,9 +262,12 @@ export function request(method: string, url: string, body?: any, file?: any, sho
                 }
               } else if (resp.statusCode === 502 && ++attempts < 4) {
                 logger.warn('A wild 502 appeared! Thanks CloudFlare!');
-                setTimeout(() => {
-                  request(method, url, body, file, true).then(resolve).catch(reject);
-                }, Math.floor(Math.random() * 1900 + 100));
+                setTimeout(
+                  () => {
+                    request(method, url, body, file, true).then(resolve).catch(reject);
+                  },
+                  Math.floor(Math.random() * 1900 + 100)
+                );
                 return cb();
               }
               cb();
