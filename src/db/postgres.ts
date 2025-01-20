@@ -19,6 +19,8 @@ interface WebhookAttributes {
   guildID: string;
   webhookID: string;
   webhookToken: string;
+  threadID: string;
+  threadParent: string;
   whitelist: string;
   lists: string[];
   cards: string[];
@@ -37,6 +39,8 @@ export class Webhook extends Model<WebhookAttributes> implements WebhookAttribut
   public guildID!: string;
   public webhookID!: string;
   public webhookToken!: string;
+  public threadID!: string;
+  public threadParent!: string;
   public whitelist!: string;
   public lists!: string[];
   public cards!: string[];
@@ -86,6 +90,8 @@ Webhook.init(
     },
     webhookID: Sequelize.STRING,
     webhookToken: Sequelize.STRING,
+    threadID: Sequelize.STRING,
+    threadParent: Sequelize.STRING,
     whitelist: {
       type: Sequelize.BOOLEAN,
       allowNull: false,

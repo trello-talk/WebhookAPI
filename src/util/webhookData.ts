@@ -393,8 +393,9 @@ export default class WebhookData {
   }
 
   private async _send(embeds: any[], attempt = 1) {
+    const thread = this.webhook.threadID;
     try {
-      await request('POST', `/webhooks/${this.webhook.webhookID}/${this.webhook.webhookToken}`, {
+      await request('POST', `/webhooks/${this.webhook.webhookID}/${this.webhook.webhookToken}${thread ? `?thread_id=${thread}` : ''}`, {
         embeds
       });
     } catch (e) {
@@ -404,7 +405,9 @@ export default class WebhookData {
           await Webhook.update(
             {
               webhookID: null,
-              webhookToken: null
+              webhookToken: null,
+              threadID: null,
+              threadParent: null
             },
             { where: { id: this.webhook.id } }
           );
@@ -413,7 +416,36 @@ export default class WebhookData {
           await Webhook.update(
             {
               webhookID: null,
-              webhookToken: null
+              webhookToken: null,
+              threadID: null,
+              threadParent: null
+            },
+            { where: { id: this.webhook.id } }
+          );
+        } else if (e.code === 10003) {
+          logger.warn(`Discord webhook points to a lost thread, removing thread setting @ ${this.webhook.webhookID}:${this.webhook.id}`, e);
+          await Webhook.update(
+            {
+              threadID: null,
+              active: false
+            },
+            { where: { id: this.webhook.id } }
+          );
+        } else if (e.code === 160005) {
+          logger.warn(`Discord webhook points to a locked thread, removing thread setting @ ${this.webhook.webhookID}:${this.webhook.id}`, e);
+          await Webhook.update(
+            {
+              threadID: null,
+              active: false
+            },
+            { where: { id: this.webhook.id } }
+          );
+        } else if (e.code === 220001) {
+          logger.warn(`Discord webhook tried posting to forum channel with no thread id @ ${this.webhook.webhookID}:${this.webhook.id}`, e);
+          await Webhook.update(
+            {
+              threadID: '0',
+              active: false
             },
             { where: { id: this.webhook.id } }
           );
