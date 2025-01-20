@@ -19,8 +19,9 @@ export function onWebhookSend(webhookID: string) {
   webhooksSent++;
 }
 
-async function collect(timestamp = new Date()) {
+async function collect() {
   if (!process.env.INFLUX_URL || !process.env.INFLUX_TOKEN) return;
+  const timestamp = cron.lastExecution;
 
   const webhookCount = await Webhook.count();
   const activeWebhookCount = await Webhook.count({ where: { active: true } });
