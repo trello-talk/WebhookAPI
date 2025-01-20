@@ -11,6 +11,7 @@
   },
   "private": true,
   "license": "MIT",
+  "packageManager": "pnpm@9.15.0",
   "scripts": {
     "start": "cd dist && node index.js",
     "build": "tsc",
