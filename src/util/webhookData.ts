@@ -446,7 +446,7 @@ export default class WebhookData {
           logger.warn(`Discord webhook tried posting to forum channel with no thread id @ ${this.webhook.webhookID}:${this.webhook.id}`, e);
           await Webhook.update(
             {
-              threadID: '0',
+              threadParent: '0',
               active: false
             },
             { where: { id: this.webhook.id } }
