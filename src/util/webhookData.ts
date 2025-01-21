@@ -374,7 +374,13 @@ export default class WebhookData {
             maxSize: 10,
             onBatch: (embeds) => {
               onWebhookSend(webhookBatchKey);
-              logger.info('Posting webhook %s (guild=%s, time=%d, thread=%s)', this.webhook.webhookID, this.webhook.guildID, Date.now(), this.webhook.threadID ?? 'none');
+              logger.info(
+                'Posting webhook %s (guild=%s, time=%d, thread=%s)',
+                this.webhook.webhookID,
+                this.webhook.guildID,
+                Date.now(),
+                this.webhook.threadID ?? 'none'
+              );
               return this._send(embeds);
             }
           });
@@ -388,7 +394,13 @@ export default class WebhookData {
       maxSize: 10,
       onBatch: (embeds) => {
         onWebhookSend(webhookBatchKey);
-        logger.info('Posting webhook %s (guild=%s, time=%d, thread=%s)', this.webhook.webhookID, this.webhook.guildID, Date.now(), this.webhook.threadID ?? 'none');
+        logger.info(
+          'Posting webhook %s (guild=%s, time=%d, thread=%s)',
+          this.webhook.webhookID,
+          this.webhook.guildID,
+          Date.now(),
+          this.webhook.threadID ?? 'none'
+        );
         return this._send(embeds);
       }
     });
