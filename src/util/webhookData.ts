@@ -303,6 +303,8 @@ export default class WebhookData {
     // Update card-list pairing cache
     if (this.card && (this.list || this.listAfter)) cardListMapCache.set(this.card.id, [Date.now(), this.list ? this.list.id : this.listAfter.id]);
 
+    const webhookBatchKey = `${this.webhook.webhookID}${this.webhook.threadID ? `:${this.webhook.threadID}` : ''}`;
+
     const EMBED_DEFAULTS = {
       default: {
         color: this.isChildAction() ? DEFAULT_COLORS.CHILD : DEFAULT_COLORS[this.filterFlag.split('_')[0]],
@@ -367,12 +369,12 @@ export default class WebhookData {
         maxTime: 2000,
         maxSize: 10,
         onBatch: (lines) => {
-          createTemporaryBatcher(this.webhook.webhookID, lodash.defaultsDeep({ description: lines.join('\n') }, EMBED_DEFAULTS.compact), {
+          createTemporaryBatcher(webhookBatchKey, lodash.defaultsDeep({ description: lines.join('\n') }, EMBED_DEFAULTS.compact), {
             maxTime: 1000,
             maxSize: 10,
             onBatch: (embeds) => {
-              onWebhookSend(this.webhook.webhookID);
-              logger.info('Posting webhook %s (guild=%s, time=%d)', this.webhook.webhookID, this.webhook.guildID, Date.now());
+              onWebhookSend(webhookBatchKey);
+              logger.info('Posting webhook %s (guild=%s, time=%d, thread=%s)', this.webhook.webhookID, this.webhook.guildID, Date.now(), this.webhook.threadID ?? 'none');
               return this._send(embeds);
             }
           });
@@ -381,12 +383,12 @@ export default class WebhookData {
       return;
     }
 
-    return createTemporaryBatcher(this.webhook.webhookID, lodash.defaultsDeep(embedStyles[this.webhook.style], EMBED_DEFAULTS[this.webhook.style]), {
+    return createTemporaryBatcher(webhookBatchKey, lodash.defaultsDeep(embedStyles[this.webhook.style], EMBED_DEFAULTS[this.webhook.style]), {
       maxTime: 1000,
       maxSize: 10,
       onBatch: (embeds) => {
-        onWebhookSend(this.webhook.webhookID);
-        logger.info('Posting webhook %s (guild=%s, time=%d)', this.webhook.webhookID, this.webhook.guildID, Date.now());
+        onWebhookSend(webhookBatchKey);
+        logger.info('Posting webhook %s (guild=%s, time=%d, thread=%s)', this.webhook.webhookID, this.webhook.guildID, Date.now(), this.webhook.threadID ?? 'none');
         return this._send(embeds);
       }
     });
