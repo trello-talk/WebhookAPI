@@ -358,7 +358,7 @@ export default class WebhookData {
     };
 
     if (this.webhook.style === 'compact') {
-      const batchKey = `compact:${this.model.id}:${this.webhook.webhookID}`;
+      const batchKey = `compact:${this.model.id}:${this.webhook.webhookID}:${this.webhook.threadID ?? '-'}`;
       const compactLine = `\`${this.isChildAction() ? COMPACT_EMOJIS.CHILD : COMPACT_EMOJIS[this.filterFlag.split('_')[0]]}\` ${
         embedStyles.small.description
       }`;
