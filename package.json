@@ -52,7 +52,7 @@
     "eslint-config-snazzah": "1.2.1",
     "husky": "8.0.3",
     "lint-staged": "14.0.1",
-    "rimraf": "5.0.5",
+    "rimraf": "5.0.10",
     "ts-devscript": "3.0.7",
     "typescript": "5.3.3"
   }
